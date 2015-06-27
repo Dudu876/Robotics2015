@@ -8,6 +8,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include <algorithm>
+#include <math.h>
 #include "lodepng.h"
 #include "../ConfigurationManager.h"
 
