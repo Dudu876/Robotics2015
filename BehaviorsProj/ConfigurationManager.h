@@ -25,7 +25,7 @@ public:
 	static void getStartLocation(int& x, int& y, int& yaw);
 	static void getGoal(int &x, int &y);
 	static void getRobotSize(int& x, int& y);
-	static int getMapResolution();
+	static double getMapResolution();
 	static int getGridResolution();
 	virtual ~ConfigurationManager();
 private:

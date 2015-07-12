@@ -26,20 +26,29 @@ std::string trim(std::string const& source, char const* delims = " \t\r\n") {
 }
 
 ConfigurationManager::ConfigurationManager() {
+	// check if the file was opened successfully
 	ifstream file("/home/colman/Desktop/parameters.txt");
 
 	  string line;
 	  string name;
 	  string value;
 	  int posEqual;
+
+	  // Run over the parameter file lines
 	  while (std::getline(file,line)) {
 
-	    if (! line.length()) continue;
+		  // Check if it is the last line
+	    if (! line.length()) {continue;}
 
+	    // Read the current parameter
 	    posEqual=line.find(':');
 	    name  = trim(line.substr(0,posEqual));
 	    value = trim(line.substr(posEqual+1));
+
+	    // Enter the parameter into the config variable
 	    _configs.insert(make_pair(name, value));
+
+	    // print variable for debugging
 	    cout << name << " : " << value << endl;
 	  }
 }
@@ -66,8 +75,8 @@ void ConfigurationManager::getRobotSize(int& x, int& y) {
 	y = atoi(((string)(v[1])).c_str());
 }
 
-int ConfigurationManager::getMapResolution() {
-	return(atoi(((string)(_configs.find("MapResolutionCM")->second)).c_str()));
+double ConfigurationManager::getMapResolution() {
+	return(strtod(((string)(_configs.find("MapResolutionCM")->second)).c_str(),NULL));
 }
 
 int ConfigurationManager::getGridResolution() {
