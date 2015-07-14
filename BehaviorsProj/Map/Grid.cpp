@@ -37,6 +37,15 @@ Grid::Grid(int rows,int cols,double resolution,unsigned height, unsigned width)
 		}
 	}
 }
+int Grid::getRows()
+{
+	return this->_gridRows;
+}
+
+int Grid::getCols()
+{
+	return this->_gridCols;
+}
 
 void Grid::setCellValue(int row, int col, int value) {
 	this->_grid[row][col] = value;

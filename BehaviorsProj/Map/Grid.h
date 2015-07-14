@@ -23,6 +23,8 @@ public:
 	Grid(int rows, int cols, double resolution,unsigned height, unsigned width);
 	virtual ~Grid();
 	void initGridByMatrix(int** grid);
+	int getRows();
+	int getCols();
 	void setCellValue(int row, int col, int value);
 	int getCellValue(int row, int col);
 };

@@ -10,6 +10,7 @@ RM := rm -rf
 -include sources.mk
 -include Utilities/subdir.mk
 -include Plans/subdir.mk
+-include Path/subdir.mk
 -include Map/subdir.mk
 -include Behaviors/subdir.mk
 -include subdir.mk

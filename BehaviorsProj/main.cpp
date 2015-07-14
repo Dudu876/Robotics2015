@@ -3,6 +3,8 @@
 #include "Robot.h"
 #include "ConfigurationManager.h"
 #include "Map/Map.h"
+#include "Map/Grid.h"
+#include "Path/PathSearcher.h"
 
 using namespace PlayerCc;
 
@@ -10,7 +12,10 @@ int main()
 {
 	static ConfigurationManager conf;
 	Map map;
-	map.loadMap();
+	Grid grid = map.getGrid();
+
+	PathSearcher* ps = new PathSearcher(grid);
+
 	Robot robot("localhost", 6665);
 	return 0;
 //	static ConfigurationManager conf;

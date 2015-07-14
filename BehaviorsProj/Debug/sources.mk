@@ -26,6 +26,7 @@ SUBDIRS := \
 . \
 Utilities \
 Plans \
+Path \
 Map \
 Behaviors \
 
