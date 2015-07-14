@@ -7,9 +7,8 @@
 
 #include "PathSearcher.h"
 
-
 PathSearcher::PathSearcher(Grid grid) {
-	this->_grid=grid;
+	this->_grid = grid;
 
 	// Init navigation members
 	this->_last_Point = 0;

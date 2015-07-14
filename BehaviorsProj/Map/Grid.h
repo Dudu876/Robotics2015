@@ -8,19 +8,25 @@
 #ifndef GRID_H_
 #define GRID_H_
 #include "../Utilities/Global.h"
+#include "../Utilities/Point.h"
+#include "../Utilities/Position.h"
 
 class Grid {
 
 	int** _grid;
-	int _gridRows,_gridCols;
+	int _gridRows, _gridCols;
 	double _gridResolution;
-	double _cellSizeInMap;
 	unsigned _height;
 	unsigned _width;
 
+	Position _startPosition;
+	Point _startPoint;
+	Point _goalPoint;
+
 public:
 	Grid();
-	Grid(int rows, int cols, double resolution,unsigned height, unsigned width);
+	Grid(int rows, int cols, double resolution, unsigned height, unsigned width,
+			Position _startPosition, Point goal);
 	virtual ~Grid();
 	void initGridByMatrix(int** grid);
 	int getRows();

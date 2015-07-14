@@ -7,39 +7,34 @@
 
 #include "Point.h"
 
-Point::Point(int row, int col)
-{
+Point::Point(int row, int col) {
 	this->_col = col;
 	this->_row = row;
 }
 
-Point::Point()
-{
+Point::Point() {
 	this->_col = 0;
 	this->_row = 0;
 }
 
-Point::~Point() {}
+Point::~Point() {
+}
 
-int Point::getCol()
-{
+int Point::getCol() {
 	return this->_col;
 }
 
-int Point::getRow()
-{
+int Point::getRow() {
 	return this->_row;
 }
 
-void Point::setCol(int col)
-{
+void Point::setCol(int col) {
 	this->_col = col;
 }
-void Point::setRow(int row)
-{
+void Point::setRow(int row) {
 	this->_row = row;
 }
-bool Point::isEqual(Point point)
-{
-	return ((this->getCol() == point.getCol()) && (this->getRow() == point.getRow()));
+bool Point::isEqual(Point point) {
+	return ((this->getCol() == point.getCol())
+			&& (this->getRow() == point.getRow()));
 }

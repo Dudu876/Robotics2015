@@ -14,7 +14,7 @@ private:
 	int _row;
 public:
 	Point();
-	Point(int row,int col);
+	Point(int row, int col);
 	void setCol(int col);
 	void setRow(int row);
 	int getCol();

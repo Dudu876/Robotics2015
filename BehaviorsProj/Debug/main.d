@@ -14,7 +14,8 @@ main.d: ../main.cpp \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h ../Robot.h \
  ../ConfigurationManager.h ../Map/Map.h ../Map/lodepng.h \
  ../Map/../ConfigurationManager.h ../Map/Grid.h \
- ../Map/../Utilities/Global.h ../Map/Grid.h ../Path/PathSearcher.h \
+ ../Map/../Utilities/Global.h ../Map/../Utilities/Point.h \
+ ../Map/../Utilities/Position.h ../Map/Grid.h ../Path/PathSearcher.h \
  ../Path/../Map/Grid.h
 
 /usr/local/include/player-2.0/libplayerc++/playerc++.h:
@@ -56,6 +57,10 @@ main.d: ../main.cpp \
 ../Map/Grid.h:
 
 ../Map/../Utilities/Global.h:
+
+../Map/../Utilities/Point.h:
+
+../Map/../Utilities/Position.h:
 
 ../Map/Grid.h:
 

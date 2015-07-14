@@ -20,7 +20,6 @@ private:
 	Grid _grid;
 	string _filename;
 
-
 public:
 	Map();
 	void loadMap();
