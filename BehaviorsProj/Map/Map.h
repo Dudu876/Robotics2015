@@ -12,12 +12,21 @@
 #include <math.h>
 #include "lodepng.h"
 #include "../ConfigurationManager.h"
+#include "Grid.h"
+#include "../Utilities/Global.h"
 
 class Map {
+private:
+	Grid _grid;
+	string _filename;
+
+
 public:
 	Map();
 	void loadMap();
 	virtual ~Map();
+
+	Grid getGrid();
 };
 
 #endif /* MAP_H_ */

@@ -13,7 +13,8 @@ main.d: ../main.cpp \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h ../Robot.h \
  ../ConfigurationManager.h ../Map/Map.h ../Map/lodepng.h \
- ../Map/../ConfigurationManager.h
+ ../Map/../ConfigurationManager.h ../Map/Grid.h \
+ ../Map/../Utilities/Global.h
 
 /usr/local/include/player-2.0/libplayerc++/playerc++.h:
 
@@ -50,3 +51,7 @@ main.d: ../main.cpp \
 ../Map/lodepng.h:
 
 ../Map/../ConfigurationManager.h:
+
+../Map/Grid.h:
+
+../Map/../Utilities/Global.h:

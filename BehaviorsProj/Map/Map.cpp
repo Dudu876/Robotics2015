@@ -12,21 +12,16 @@
 using namespace std;
 
 Map::Map() {
-	// TODO Auto-generated constructor stub
-
-}
-
-void Map::loadMap() {
 	//the raw pixels
 	vector<unsigned char> image;
 
 	unsigned width, height;
 
 	// Geting the file path
-	const string filename = ConfigurationManager::getMapLocation();
+	this->_filename = ConfigurationManager::getMapLocation();
 
 	// Decoding the image from the path we got earlier
-	unsigned error = lodepng::decode(image, width, height, filename);
+	unsigned error = lodepng::decode(image, width, height, this->_filename);
 
 	// If there's an error loading the image, display it
 	if(error) cout << "decoder error " << error << ": " << lodepng_error_text(error) << endl;
@@ -39,9 +34,9 @@ void Map::loadMap() {
 			if (image[y * width * 4 + x * 4 + 0]
 					|| image[y * width * 4 + x * 4 + 1]
 					|| image[y * width * 4 + x * 4 + 2])
-				map[y][x] = 0;
+				map[y][x] = FREE;
 			else
-				map[y][x] = 1;
+				map[y][x] = BLOCK;
 		}
 	}
 
@@ -90,45 +85,47 @@ void Map::loadMap() {
 						for(int pX=x-puffSize/2;pX< x+puffSize/2;pX++){
 							// Check if we didnt exceed the matrix
 							if(pX>=0 && pX<width){
-								largeMap[pY][pX]=1;
+								largeMap[pY][pX]=BLOCK;
 							}
 						}
 					}
 				}
 			}
 			else{
-				largeMap[y][x]=0;
+				largeMap[y][x]=FREE;
 			}
 		}
 	}
 
 
 	//printing the large matrix to file to check it
-
-	FILE *f = fopen("mapPuffy.txt", "w");
-	if (f == NULL)
-	{
-	    printf("Error opening file!\n");
-	    exit(1);
+	FILE* f = fopen("mapPuffy.txt", "w");
+	if (f == NULL) {
+		printf("Error opening file!\n");
+		exit(1);
 	}
-
-
-	for (int y=0;y<height;y++) {
-		for (int x=0;x<width;x++) {
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
 			fprintf(f, "%d", largeMap[y][x]);
 			//cout << map[y][x];
 		}
 		fprintf(f, "\n");
 		//cout << endl;
 	}
-
 	fclose(f);
-
-
 
 	int grid_height = (height*mapResolution)/gridResolution;
 	int grid_width = (width*mapResolution)/gridResolution;
-	int grid[grid_height][grid_width];
+
+	int** grid = new int*[grid_height];
+
+	// init grid
+	for(int i = 0; i < grid_height; ++i)
+	{
+		grid[i] = new int[grid_width];
+	}
+
+	//int grid[grid_height][grid_width];
 
 	int scaleLargeToGrid = gridResolution/mapResolution;
 
@@ -144,7 +141,7 @@ void Map::loadMap() {
 					for(int pX=x*scaleLargeToGrid;pX< x*scaleLargeToGrid+scaleLargeToGrid;pX++){
 						// Check if we didnt exceed the matrix
 						if(pX>=0 && pX<width){
-							if(largeMap[pY][pX]==1)
+							if(largeMap[pY][pX] == BLOCK)
 							{
 								isBlack = true;
 								break;
@@ -156,36 +153,41 @@ void Map::loadMap() {
 
 			// if one of the 4 (scaleLargeToGrid) is black, we paint the grid cell to black
 			if (isBlack){
-				grid[y][x]=1;
+				grid[y][x] = BLOCK;
 			}
-			else
-				grid[y][x] = 0;
+			else{
+				grid[y][x] = FREE;
+			}
 		}
 	}
 
+	this->_grid = Grid(grid_height,grid_width,gridResolution,height,width);
+	this->_grid.initGridByMatrix(grid);
 
 
 	//printing the grid to file to check it
-
-		FILE *fgrid = fopen("grid.txt", "w");
-		if (fgrid == NULL)
-		{
-		    printf("Error opening file!\n");
-		    exit(1);
+	FILE* fgrid = fopen("grid.txt", "w");
+	if (fgrid == NULL) {
+		printf("Error opening file!\n");
+		exit(1);
+	}
+	for (int y = 0; y < grid_height; y++) {
+		for (int x = 0; x < grid_width; x++) {
+			fprintf(fgrid, "%d", grid[y][x]);
+			//cout << map[y][x];
 		}
+		fprintf(fgrid, "\n");
+		//cout << endl;
+	}
+	fclose(fgrid);
+}
 
+Grid Map::getGrid()
+{
+	return this->_grid;
+}
 
-		for (int y=0;y<grid_height;y++) {
-			for (int x=0;x<grid_width;x++) {
-				fprintf(fgrid, "%d", grid[y][x]);
-				//cout << map[y][x];
-			}
-			fprintf(fgrid, "\n");
-			//cout << endl;
-		}
-
-		fclose(fgrid);
-
+void Map::loadMap() {
 
 }
 
