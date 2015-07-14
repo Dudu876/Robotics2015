@@ -10,6 +10,9 @@
 #include "../Map/Grid.h"
 #include <vector>
 #include "../Utilities/Point.h"
+#include "math.h"
+#include <queue>
+
 using namespace std;
 
 class PathSearcher {
@@ -25,6 +28,10 @@ public:
 	virtual ~PathSearcher();
 
 	vector<Point> searchPath(Point startPoint, Point goalPoint);
+	double heuristicCostEstimate(Point point1, Point point2);
+	int getLowestValueFrom(vector<Point> vector, double** scores);
+	vector<Point> reconstructPath(Point** came_from, Point goalPoint);
+	queue<Point> getPointNeighbors(Point point);
 };
 
 #endif /* PATHSEARCHER_H_ */
