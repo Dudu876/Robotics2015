@@ -52,6 +52,14 @@ int Grid::getCellValue(int row, int col) {
 	return this->_grid[row][col];
 }
 
+Point Grid::getStartPoint() {
+	return this->_startPoint;
+}
+
+Point Grid::getGoalPoint() {
+	return this->_goalPoint;
+}
+
 void Grid::initGridByMatrix(int** grid) {
 	//init _grid by given grid
 	for (int row = 0; row < this->_gridRows; row++) {

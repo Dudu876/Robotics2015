@@ -19,3 +19,6 @@ PathSearcher::~PathSearcher() {
 	// TODO Auto-generated destructor stub
 }
 
+vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
+
+}

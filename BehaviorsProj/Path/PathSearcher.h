@@ -8,6 +8,9 @@
 #ifndef PATHSEARCHER_H_
 #define PATHSEARCHER_H_
 #include "../Map/Grid.h"
+#include <vector>
+#include "../Utilities/Point.h"
+using namespace std;
 
 class PathSearcher {
 private:
@@ -20,6 +23,8 @@ private:
 public:
 	PathSearcher(Grid grid);
 	virtual ~PathSearcher();
+
+	vector<Point> searchPath(Point startPoint, Point goalPoint);
 };
 
 #endif /* PATHSEARCHER_H_ */

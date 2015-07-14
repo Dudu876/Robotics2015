@@ -33,6 +33,9 @@ public:
 	int getCols();
 	void setCellValue(int row, int col, int value);
 	int getCellValue(int row, int col);
+
+	Point getStartPoint();
+	Point getGoalPoint();
 };
 
 #endif /* GRID_H_ */

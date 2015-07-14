@@ -16,7 +16,7 @@ main.d: ../main.cpp \
  ../Map/../ConfigurationManager.h ../Map/Grid.h \
  ../Map/../Utilities/Global.h ../Map/../Utilities/Point.h \
  ../Map/../Utilities/Position.h ../Map/Grid.h ../Path/PathSearcher.h \
- ../Path/../Map/Grid.h
+ ../Path/../Map/Grid.h ../Path/../Utilities/Point.h
 
 /usr/local/include/player-2.0/libplayerc++/playerc++.h:
 
@@ -67,3 +67,5 @@ main.d: ../main.cpp \
 ../Path/PathSearcher.h:
 
 ../Path/../Map/Grid.h:
+
+../Path/../Utilities/Point.h:

@@ -8,13 +8,15 @@
 
 using namespace PlayerCc;
 
-int main()
-{
+int main() {
 	static ConfigurationManager conf;
 	Map map;
 	Grid grid = map.getGrid();
 
 	PathSearcher* ps = new PathSearcher(grid);
+
+	vector<Point> path = ps->searchPath(grid.getStartPoint(),
+			grid.getStartPoint());
 
 	Robot robot("localhost", 6665);
 	return 0;
@@ -24,7 +26,4 @@ int main()
 //	Manager manager(&robot, &plnOA);
 //	manager.run();
 }
-
-
-
 
