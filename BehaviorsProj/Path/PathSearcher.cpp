@@ -89,9 +89,55 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 		closed_set.push_back(currentPoint);
 
 		// Get neighbors of point
-		queue<Point> neighbors = getPointNeighbors(currentPoint);
+		queue<Point> neighborsQueue = getPointNeighbors(currentPoint);
 
+		// Run over neighbors
+		while (neighborsQueue.empty() == false) {
+			// Get the first neighbor point and pop it out
+			Point neighborPoint = neighborsQueue.front();
+			neighborsQueue.pop();
+
+			// Check if the neighbor point is in the close_set
+			if (isPointInsideVector(closed_set, neighborPoint) == false) {
+				// Calc the tentative g score by add the distance between them (1)
+				double temp_g_score =
+						g_score[currentPoint.getRow()][currentPoint.getCol()]
+								+ 1;
+				/*
+				// if there are blocks around, add their scale to the temp_g_score
+				if (checkObstacleAround(
+						Point(currentPoint.getRow(), currentPoint.getCol()))) {
+					temp_g_score += SCALE_OF_OBSTACLE;
+				}*/
+
+				// Check 1. if we didnt reach this point
+				//       2. if we already got to this point from another path and the current path is lower
+				if (isPointInsideVector(open_set, neighborPoint) == false
+						|| (temp_g_score
+								< g_score[neighborPoint.getRow()][neighborPoint.getCol()])) {
+
+					came_from[neighborPoint.getRow()][neighborPoint.getCol()] =
+							currentPoint;
+
+					g_score[neighborPoint.getRow()][neighborPoint.getCol()] =
+							temp_g_score;
+
+					f_score[neighborPoint.getRow()][neighborPoint.getCol()] =
+							temp_g_score
+									+ heuristicCostEstimate(neighborPoint,
+											goalPoint);
+
+					if (isPointInsideVector(open_set, neighborPoint) == false) {
+						open_set.push_back(neighborPoint);
+					}
+				}
+			}
+		}
 	}
+
+	this->_path = path;
+	//this->chooseWayPoints();
+	return path;
 
 }
 
@@ -148,8 +194,7 @@ vector<Point> PathSearcher::reconstructPath(Point** came_from,
 }
 
 // Check point's neighbors
-queue<Point> PathSearcher::getPointNeighbors(Point point)
-{
+queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	queue<Point> q_neighbors;
 	int row = point.getRow();
 	int col = point.getCol();
@@ -157,85 +202,82 @@ queue<Point> PathSearcher::getPointNeighbors(Point point)
 	// TOP BOTTOM LEFT RIGHT check
 
 	// Check if we dont cross the TOP edge
-	if (row - 1 > 0)
-	{
+	if (row - 1 > 0) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col) == FREE)
-		{
-			q_neighbors.push(Point(row - 1,col));
+		if (this->_grid.getCellValue(row - 1, col) == FREE) {
+			q_neighbors.push(Point(row - 1, col));
 		}
 	}
 
 	// Check if we dont cross the BOTTOM edge
-	if (row + 1 < this->_grid.getRows())
-	{
+	if (row + 1 < this->_grid.getRows()) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row + 1, col) == FREE)
-		{
-			q_neighbors.push(Point(row + 1,col));
+		if (this->_grid.getCellValue(row + 1, col) == FREE) {
+			q_neighbors.push(Point(row + 1, col));
 		}
 	}
 
 	// Check if we dont cross the LEFT edge
-	if (col - 1 > 0)
-	{
+	if (col - 1 > 0) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row, col - 1) == FREE)
-		{
-			q_neighbors.push(Point(row,col - 1));
+		if (this->_grid.getCellValue(row, col - 1) == FREE) {
+			q_neighbors.push(Point(row, col - 1));
 		}
 	}
 
 	// Check if we dont cross the RIGHT edge
-	if (col + 1 < this->_grid.getCols())
-	{
+	if (col + 1 < this->_grid.getCols()) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row, col + 1) == FREE)
-		{
-			q_neighbors.push(Point(row,col + 1));
+		if (this->_grid.getCellValue(row, col + 1) == FREE) {
+			q_neighbors.push(Point(row, col + 1));
 		}
 	}
 
 	// DIAGONAL check
 
 	// Check if we dont cross the TOP LEFT edge
-	if ((row - 1 > 0) && (col - 1 > 0))
-	{
+	if ((row - 1 > 0) && (col - 1 > 0)) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE)
-		{
-			q_neighbors.push(Point(row - 1,col - 1));
+		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
+			q_neighbors.push(Point(row - 1, col - 1));
 		}
 	}
 
 	// Check if we dont cross the TOP RIGHT edge
-	if ((row - 1 > 0) && (col + 1 < this->_grid.getCols()))
-	{
+	if ((row - 1 > 0) && (col + 1 < this->_grid.getCols())) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE)
-		{
-			q_neighbors.push(Point(row - 1,col - 1));
+		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
+			q_neighbors.push(Point(row - 1, col - 1));
 		}
 	}
 	// Check if we dont cross the BOTTOM LEFT edge
-	if ((row + 1 < this->_grid.getRows()) && (col - 1 > 0))
-	{
+	if ((row + 1 < this->_grid.getRows()) && (col - 1 > 0)) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE)
-		{
-			q_neighbors.push(Point(row - 1,col - 1));
+		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
+			q_neighbors.push(Point(row - 1, col - 1));
 		}
 	}
 
 	// Check if we dont cross the BOTTOM RIGHT edge
-	if ((row + 1 < this->_grid.getRows()) && (col + 1 < this->_grid.getCols()))
-	{
+	if ((row + 1 < this->_grid.getRows())
+			&& (col + 1 < this->_grid.getCols())) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE)
-		{
-			q_neighbors.push(Point(row - 1,col - 1));
+		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
+			q_neighbors.push(Point(row - 1, col - 1));
 		}
 	}
 
 	return q_neighbors;
+}
+
+bool PathSearcher::isPointInsideVector(vector<Point> vector, Point point) {
+	// Run over the vector points
+	for (unsigned int index = 0; index < vector.size(); index++) {
+		// Check if the current point is equal to the given point
+		if (vector[index].isEqual(point)) {
+			return true;
+		}
+	}
+
+	return false;
 }

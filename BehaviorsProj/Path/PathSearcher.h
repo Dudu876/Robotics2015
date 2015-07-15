@@ -23,6 +23,9 @@ private:
 
 	// Grid of the surface
 	Grid _grid;
+
+	// Claculated path
+	vector<Point> _path;
 public:
 	PathSearcher(Grid grid);
 	virtual ~PathSearcher();
@@ -32,6 +35,7 @@ public:
 	int getLowestValueFrom(vector<Point> vector, double** scores);
 	vector<Point> reconstructPath(Point** came_from, Point goalPoint);
 	queue<Point> getPointNeighbors(Point point);
+	bool isPointInsideVector(vector<Point> vector, Point point);
 };
 
 #endif /* PATHSEARCHER_H_ */

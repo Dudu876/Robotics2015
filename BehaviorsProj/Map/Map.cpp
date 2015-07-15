@@ -74,11 +74,11 @@ Map::Map() {
 	 }*/
 
 	// Running over the matrix map and puffy it
-	//TODO: ask dudu why y and x start from 1 and not from 0
+	//TODO: check if we need to puff full size
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			// Check if there is black cell
-			if (map[y][x] == 1) {
+			if (map[y][x] == BLOCK) {
 
 				// Run over the cell to puff
 				for (int pY = y - puffSize / 2; pY < y + puffSize / 2; pY++) {

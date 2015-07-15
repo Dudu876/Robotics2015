@@ -10,13 +10,13 @@ using namespace PlayerCc;
 
 int main() {
 	static ConfigurationManager conf;
-	Map map;
+	Map map = Map();
 	Grid grid = map.getGrid();
 
 	PathSearcher* ps = new PathSearcher(grid);
 
 	vector<Point> path = ps->searchPath(grid.getStartPoint(),
-			grid.getStartPoint());
+			grid.getGoalPoint());
 
 	Robot robot("localhost", 6665);
 	return 0;
