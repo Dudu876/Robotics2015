@@ -199,9 +199,6 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	int row = point.getRow();
 	int col = point.getCol();
 
-	if(row == 41 && col == 55)
-		int a = 1;
-
 	for(int cur_row=row-1;cur_row<=row+1;cur_row++)
 	{
 		for(int cur_col=col-1;cur_col<=col+1;cur_col++)
