@@ -14,6 +14,8 @@ Grid::Grid() {
 
 Grid::Grid(int rows, int cols, double resolution, unsigned height,
 		unsigned width, Position start, Point goal) {
+	this->_height = height;
+	this->_width = width;
 	this->_gridRows = rows;
 	this->_gridCols = cols;
 	this->_gridResolution = resolution;
