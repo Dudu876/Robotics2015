@@ -246,15 +246,15 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	// Check if we dont cross the TOP RIGHT edge
 	if ((row - 1 > 0) && (col + 1 < this->_grid.getCols())) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
-			q_neighbors.push(Point(row - 1, col - 1));
+		if (this->_grid.getCellValue(row - 1, col + 1) == FREE) {
+			q_neighbors.push(Point(row - 1, col + 1));
 		}
 	}
 	// Check if we dont cross the BOTTOM LEFT edge
 	if ((row + 1 < this->_grid.getRows()) && (col - 1 > 0)) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
-			q_neighbors.push(Point(row - 1, col - 1));
+		if (this->_grid.getCellValue(row + 1, col - 1) == FREE) {
+			q_neighbors.push(Point(row + 1, col - 1));
 		}
 	}
 
@@ -262,8 +262,8 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	if ((row + 1 < this->_grid.getRows())
 			&& (col + 1 < this->_grid.getCols())) {
 		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(row - 1, col - 1) == FREE) {
-			q_neighbors.push(Point(row - 1, col - 1));
+		if (this->_grid.getCellValue(row + 1, col + 1) == FREE) {
+			q_neighbors.push(Point(row + 1, col + 1));
 		}
 	}
 

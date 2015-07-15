@@ -7,7 +7,7 @@
 
 #include "Point.h"
 
-Point::Point(int row, int col) {
+Point::Point(int col, int row) {
 	this->_col = col;
 	this->_row = row;
 }
