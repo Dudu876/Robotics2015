@@ -10,6 +10,8 @@
 #include "../Map/Grid.h"
 #include <vector>
 #include "../Utilities/Point.h"
+#include "../Utilities/Global.h"
+#include "../Path/WayPointsManager.h"
 #include "math.h"
 #include <queue>
 

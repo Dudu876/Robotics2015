@@ -310,7 +310,7 @@ void PathSearcher::calculateWayPoints()
 	int direction = getNextWayPoint();
 
 	while(direction != STOP){
-		if(direction != MoveForward)
+		if(direction != MOVE_FORWARD)
 		{
 			this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
 		}
@@ -344,5 +344,5 @@ vector<Position> PathSearcher::getRealPath()
 
 vector<Position> PathSearcher::getWayPoints()
 {
-	return this->_wayPoints.getWayPoints;
+	return this->_wayPoints.getWayPoints();
 }

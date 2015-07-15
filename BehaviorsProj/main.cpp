@@ -47,8 +47,8 @@ int main() {
 
 	vector<Position> waypoint = ps->getWayPoints();
 
-	grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
-
+	//TODO: what the fuck is that?
+	//grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
 	for (int i = 0; i < waypoint.size(); i++)
 	{
 		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
