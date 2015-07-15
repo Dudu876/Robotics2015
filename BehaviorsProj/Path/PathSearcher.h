@@ -26,6 +26,7 @@ private:
 
 	// Claculated path
 	vector<Point> _path;
+	int** createStepPowerGrid()
 public:
 	PathSearcher(Grid grid);
 	virtual ~PathSearcher();
