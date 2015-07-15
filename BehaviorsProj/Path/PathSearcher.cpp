@@ -37,14 +37,6 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 		came_from[i] = new Point[this->_grid.getCols()];
 	}
 
-	// The map of navigated nodes.
-	int* wall_power[this->_grid.getRows()];
-
-	// Init the navigated nodes
-	for (int i = 0; i < this->_grid.getRows(); i++) {
-		wall_power[i] = new int[this->_grid.getCols()];
-	}
-
 	// Insert the startPoint
 	came_from[(int) startPoint.getRow()][(int) startPoint.getCol()] =
 			startPoint;
@@ -98,10 +90,6 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 
 		// Get neighbors of point
 		queue<Point> neighborsQueue = getPointNeighbors(currentPoint);
-		if (currentPoint.getCol() == 50 && currentPoint.getRow() == 40) {
-			int i;
-			i = 5 + 4;
-		}
 
 		// Run over neighbors
 		while (neighborsQueue.empty() == false) {
@@ -116,11 +104,11 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 						g_score[currentPoint.getRow()][currentPoint.getCol()]
 								+ 1;
 				/*
-				 // if there are blocks around, add their scale to the temp_g_score
-				 if (checkObstacleAround(
-				 Point(currentPoint.getRow(), currentPoint.getCol()))) {
-				 temp_g_score += SCALE_OF_OBSTACLE;
-				 }*/
+				// if there are blocks around, add their scale to the temp_g_score
+				if (checkObstacleAround(
+						Point(currentPoint.getRow(), currentPoint.getCol()))) {
+					temp_g_score += SCALE_OF_OBSTACLE;
+				}*/
 
 				// Check 1. if we didnt reach this point
 				//       2. if we already got to this point from another path and the current path is lower
@@ -211,15 +199,19 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	int row = point.getRow();
 	int col = point.getCol();
 
-	for (int cur_row = row - 1; cur_row <= row + 1; cur_row++) {
-		for (int cur_col = col - 1; cur_col <= col + 1; cur_col++) {
-			if ((cur_row > 0) && (cur_row < this->_grid.getRows())
-					&& (cur_col > 0) && (cur_col < this->_grid.getCols())
-					&& (cur_row != row) && (cur_col != col)) {
-				if (this->_grid.getCellValue(cur_row, cur_col) == FREE) {
+	for(int cur_row=row-1;cur_row<=row+1;cur_row++)
+	{
+		for(int cur_col=col-1;cur_col<=col+1;cur_col++)
+		{
+			if((cur_row > 0) && (cur_row < this->_grid.getRows()) &&
+			   (cur_col > 0) && (cur_col < this->_grid.getCols()) &&
+			   (cur_row != row) && (cur_col != col))
+		   {
+				if (this->_grid.getCellValue(cur_row, cur_col) == FREE)
+				{
 					q_neighbors.push(Point(cur_row, cur_col));
 				}
-			}
+		   }
 		}
 	}
 
@@ -238,41 +230,114 @@ bool PathSearcher::isPointInsideVector(vector<Point> vector, Point point) {
 	return false;
 }
 
-int** PathSearcher::createStepPowerGrid() {
-	int wall_power[this->_grid.getRows()][this->_grid.getCols()];
+int PathSearcher::getNextWayPoint()
+{
+	int toReturn;
+	this->_last_Point++;
 
-	for (int row = 0; row < this->_grid.getRows(); row++) {
-		for (int col = 0; col < this->_grid.getCols(); col++) {
-			if (this->_grid.getCellValue(row, col) == BLOCK) {
-				for (int cur_row = row - 2; cur_row <= row + 2; cur_row++) {
-					for (int cur_col = col - 2; cur_col <= col + 2; cur_col++) {
-						if ((cur_row > 0) && (cur_row < this->_grid.getRows())
-								&& (cur_col > 0)
-								&& (cur_col < this->_grid.getCols())
-								&& (cur_row != row) && (cur_col != col)) {
-							if (this->_grid.getCellValue(cur_row,
-									cur_col) == FREE) {
-								wall_power[cur_row][cur_col] = WALL_POWER_1;
-							}
-						}
-					}
+	if (this->_last_Point != this->_path.size())
+	{
+		Point prev = this->_path[this->_last_Point - 1];
+		Point next = this->_path[this->_last_Point];
+
+		if (prev.getRow() == next.getRow())
+		{
+			if(prev.getCol() > next.getCol())
+			{
+				toReturn = LEFT;
+			}
+			else if(prev.getCol() < next.getCol())
+			{
+				toReturn = RIGHT;
+			}
+		}
+		else if (prev.getCol() == next.getCol())
+		{
+			if (prev.getRow() > next.getRow())
+			{
+				toReturn = UP;
+			}
+			else if (prev.getRow() < next.getRow())
+			{
+				toReturn = DOWN;
+			}
+		}
+		else
+		{
+			if(prev.getRow() > next.getRow())
+			{
+				if (prev.getCol() > next.getCol())
+				{
+					toReturn = UP_LEFT;
 				}
-				for (int cur_row = row - 1; cur_row <= row + 1; cur_row++) {
-					for (int cur_col = col - 1; cur_col <= col + 1; cur_col++) {
-						if ((cur_row > 0) && (cur_row < this->_grid.getRows())
-								&& (cur_col > 0)
-								&& (cur_col < this->_grid.getCols())
-								&& (cur_row != row) && (cur_col != col)) {
-							if (this->_grid.getCellValue(cur_row,
-									cur_col) == FREE) {
-								wall_power[cur_row][cur_col] = WALL_POWER_2;
-							}
-						}
-					}
+				else
+				{
+					toReturn = UP_RIGHT;
+				}
+			}
+			else
+			{
+				if (prev.getCol() > next.getCol())
+				{
+					toReturn = DOWN_LEFT;
+				}
+				else
+				{
+					toReturn = DOWN_RIGHT;
 				}
 			}
 		}
+
+		if (toReturn == this->_last_Direction)
+		{
+			toReturn = MOVE_FORWARD;
+		}
+		else
+		{
+			this->_last_Direction = toReturn;
+		}
+	}
+	else
+	{
+		toReturn = STOP;
 	}
 
-	return wall_power;
+	return toReturn;
+}
+
+void PathSearcher::calculateWayPoints()
+{
+	int direction = getNextWayPoint();
+
+	while(direction != STOP){
+		if(direction != MoveForward)
+		{
+			this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
+		}
+
+		direction = getNextWayPoint();
+	}
+
+	this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
+}
+
+Position PathSearcher::calcualteRealPosition(Point point)
+{
+	double gridResolution = this->_grid.getGridResolution();
+
+	double y = point.getRow() / gridResolution + 100 * gridResolution / 2;
+	double x = point.getCol() / gridResolution + 100 * gridResolution / 2;
+
+	return Position(x,y,0);
+}
+
+vector<Position> PathSearcher::getRealPath()
+{
+	vector<Position> realPath;
+	for (int i = 0; i< this->_path.size(); i++)
+	{
+		realPath.push_back(calcualteRealPosition(this->_path[i]));
+	}
+
+	return realPath;
 }

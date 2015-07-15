@@ -61,6 +61,10 @@ Point Grid::getGoalPoint() {
 	return this->_goalPoint;
 }
 
+double Grid::getGridResolution() {
+	return this->_gridResolution;
+}
+
 void Grid::initGridByMatrix(int** grid) {
 	//init _grid by given grid
 	for (int row = 0; row < this->_gridRows; row++) {

@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Path/PathSearcher.cpp 
+../Path/PathSearcher.cpp \
+../Path/WayPointsManager.cpp 
 
 OBJS += \
-./Path/PathSearcher.o 
+./Path/PathSearcher.o \
+./Path/WayPointsManager.o 
 
 CPP_DEPS += \
-./Path/PathSearcher.d 
+./Path/PathSearcher.d \
+./Path/WayPointsManager.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

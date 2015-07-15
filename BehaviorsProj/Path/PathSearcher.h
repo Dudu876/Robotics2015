@@ -13,20 +13,18 @@
 #include "math.h"
 #include <queue>
 
-using namespace std;
-
 class PathSearcher {
 private:
 	// data members for navigation
 	unsigned _last_Point;
 	int _last_Direction;
+	WayPointsManager _wayPoints;
 
 	// Grid of the surface
 	Grid _grid;
 
 	// Claculated path
 	vector<Point> _path;
-	int** createStepPowerGrid()
 public:
 	PathSearcher(Grid grid);
 	virtual ~PathSearcher();
@@ -37,6 +35,13 @@ public:
 	vector<Point> reconstructPath(Point** came_from, Point goalPoint);
 	queue<Point> getPointNeighbors(Point point);
 	bool isPointInsideVector(vector<Point> vector, Point point);
+	int getNextWayPoint();
+	void calculateWayPoints();
+
+	Position calcualteRealPosition(Point point);
+	vector<Position> getRealPath();
+
+
 };
 
 #endif /* PATHSEARCHER_H_ */

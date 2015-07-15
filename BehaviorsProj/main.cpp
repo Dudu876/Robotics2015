@@ -29,6 +29,23 @@ int main() {
 		printf("Error opening file!\n");
 		exit(1);
 	}
+
+	// sets path in grid matrix
+	for (int i = 0; i < path.size(); i++)
+	{
+		grid.setCellValue(path[i].getRow(),path[i].getCol(),PATH_CELL);
+	}
+
+	Robot robot("localhost", 6665);
+	return 0;
+//	static ConfigurationManager conf;
+//	Robot robot("localhost",6665);
+//	PlnObstacleAvoid plnOA(&robot);
+//	Manager manager(&robot, &plnOA);
+//	manager.run();
+
+
+
 	for (int y = 0; y < grid.getRows(); y++) {
 		for (int x = 0; x < grid.getCols(); x++) {
 			if(grid.getCellValue(y,x) == 8)
@@ -41,13 +58,4 @@ int main() {
 		//cout << endl;
 	}
 	fclose(fgrid);
-
-	Robot robot("localhost", 6665);
-	return 0;
-//	static ConfigurationManager conf;
-//	Robot robot("localhost",6665);
-//	PlnObstacleAvoid plnOA(&robot);
-//	Manager manager(&robot, &plnOA);
-//	manager.run();
 }
-

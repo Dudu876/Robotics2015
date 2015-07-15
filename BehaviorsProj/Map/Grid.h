@@ -33,7 +33,7 @@ public:
 	int getCols();
 	void setCellValue(int row, int col, int value);
 	int getCellValue(int row, int col);
-
+	double getGridResolution();
 	Point getStartPoint();
 	Point getGoalPoint();
 };

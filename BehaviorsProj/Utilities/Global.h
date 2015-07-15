@@ -8,6 +8,7 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
+using namespace std;
 
 // movement
 #define ROTATION_SPEED 0.02
@@ -33,10 +34,6 @@
 #define PATH_CELL 2
 #define START_CELL 3
 #define GOAL_CELL 4
-
-// Wall Power
-#define WALL_POWER_1 2
-#define WALL_POWER_2 3
 
 class Global {
 public:
