@@ -5,6 +5,7 @@
 #include "Map/Map.h"
 #include "Map/Grid.h"
 #include "Path/PathSearcher.h"
+#include "Manager.h"
 
 using namespace PlayerCc;
 
@@ -13,8 +14,8 @@ int main() {
 	Map map = Map();
 	Grid grid = map.getGrid();
 
-	//TODO: add start location
-	Robot robot("localhost", 6665);
+	//TODO: add start location & fix
+	//Robot robot("localhost", 6665);
 
 	PathSearcher* ps = new PathSearcher(grid);
 
@@ -54,11 +55,11 @@ int main() {
 		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
 	};
 
-	Manager mgr  = Manager(&robot,ps->getWayPoints());
+	//TODO: Fix.
+//	Manager mgr = new Manager(&robot,ps->getWayPoints());
+//
+//	mgr.run();
 
-	mgr.run();
-
-	return 0;
 //	static ConfigurationManager conf;
 //	Robot robot("localhost",6665);
 //	PlnObstacleAvoid plnOA(&robot);
@@ -66,7 +67,7 @@ int main() {
 //	manager.run();
 
 
-
+	//TODO: remove this print (for debug only)
 	for (int y = 0; y < grid.getRows(); y++) {
 		for (int x = 0; x < grid.getCols(); x++) {
 			if(grid.getCellValue(y,x) == 8)
@@ -79,4 +80,7 @@ int main() {
 		//cout << endl;
 	}
 	fclose(fgrid);
+
+
+	return 0;
 }

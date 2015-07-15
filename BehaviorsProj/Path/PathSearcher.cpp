@@ -155,7 +155,7 @@ int PathSearcher::getLowestValueFrom(vector<Point> vector, double** scores) {
 	Point lowest = vector[bestIndex];
 
 	// Run over the vector of nodes
-	for (unsigned int index = 1; index < vector.size(); index++) {
+	for (int index = 1; index < vector.size(); index++) {
 		Point temp = vector[index];
 		if (scores[lowest.getRow()][lowest.getCol()]
 				> scores[temp.getRow()][temp.getCol()]) {
@@ -199,13 +199,16 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	int row = point.getRow();
 	int col = point.getCol();
 
+	if(row == 41 && col == 55)
+		int a = 1;
+
 	for(int cur_row=row-1;cur_row<=row+1;cur_row++)
 	{
 		for(int cur_col=col-1;cur_col<=col+1;cur_col++)
 		{
 			if((cur_row > 0) && (cur_row < this->_grid.getRows()) &&
 			   (cur_col > 0) && (cur_col < this->_grid.getCols()) &&
-			   (cur_row != row) && (cur_col != col))
+			   !((cur_row == row) && (cur_col == col)))
 		   {
 				if (this->_grid.getCellValue(cur_row, cur_col) == FREE)
 				{
