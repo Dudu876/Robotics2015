@@ -18,7 +18,10 @@ void WayPointsManager::addWayPoint(Position waypoint)
 	WayPointsManager::_wayPoints.push_back(waypoint);
 }
 
-
+vector<Position> WayPointsManager::getWayPoints()
+{
+	return this->_wayPoints;
+}
 WayPointsManager::~WayPointsManager() {
 	// TODO Auto-generated destructor stub
 }

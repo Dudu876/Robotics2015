@@ -13,6 +13,9 @@ int main() {
 	Map map = Map();
 	Grid grid = map.getGrid();
 
+	//TODO: add start location
+	Robot robot("localhost", 6665);
+
 	PathSearcher* ps = new PathSearcher(grid);
 
 	vector<Point> path = ps->searchPath(grid.getStartPoint(),
@@ -36,7 +39,25 @@ int main() {
 		grid.setCellValue(path[i].getRow(),path[i].getCol(),PATH_CELL);
 	}
 
-	Robot robot("localhost", 6665);
+
+	grid.setCellValue(grid.getStartPoint().getRow(),grid.getStartPoint().getCol(),START_CELL);
+	grid.setCellValue(grid.getGoalPoint().getRow(),grid.getGoalPoint().getCol(),GOAL_CELL);
+
+	//TODO: bonus: grid.printMeSimanKria();
+
+	vector<Position> waypoint = ps->getWayPoints();
+
+	grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
+
+	for (int i = 0; i < waypoint.size(); i++)
+	{
+		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
+	};
+
+	Manager mgr  = Manager(&robot,ps->getWayPoints());
+
+	mgr.run();
+
 	return 0;
 //	static ConfigurationManager conf;
 //	Robot robot("localhost",6665);

@@ -12,11 +12,12 @@
 #include "../Utilities/Position.h"
 
 class WayPointsManager {
+private:
+	vector<Position> _wayPoints;
 public:
 	WayPointsManager();
 	virtual ~WayPointsManager();
-	vector<Position> _wayPoints;
-
+	vector<Position> getWayPoints();
 	void addWayPoint(Position waypoint);
 };
 

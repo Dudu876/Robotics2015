@@ -341,3 +341,8 @@ vector<Position> PathSearcher::getRealPath()
 
 	return realPath;
 }
+
+vector<Position> PathSearcher::getWayPoints()
+{
+	return this->_wayPoints.getWayPoints;
+}

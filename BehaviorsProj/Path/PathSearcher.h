@@ -37,9 +37,9 @@ public:
 	bool isPointInsideVector(vector<Point> vector, Point point);
 	int getNextWayPoint();
 	void calculateWayPoints();
-
 	Position calcualteRealPosition(Point point);
 	vector<Position> getRealPath();
+	vector<Position> getWayPoints();
 
 
 };
