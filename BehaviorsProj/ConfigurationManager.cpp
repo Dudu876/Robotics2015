@@ -27,7 +27,7 @@ std::string trim(std::string const& source, char const* delims = " \t\r\n") {
 
 ConfigurationManager::ConfigurationManager() {
 	// check if the file was opened successfully
-	ifstream file("/home/colman/Desktop/parameters.txt");
+	ifstream file("parameters.txt");
 
 	  string line;
 	  string name;

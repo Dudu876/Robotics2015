@@ -143,8 +143,8 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 
 // Calc the geometric distance between two points
 double PathSearcher::heuristicCostEstimate(Point point1, Point point2) {
-	double deltaX = point1.getCol() - point2.getCol();
 	double deltaY = point1.getRow() - point2.getRow();
+	double deltaX = point1.getCol() - point2.getCol();
 
 	return (sqrt(pow(deltaX, 2.0) + pow(deltaY, 2.0)));
 }
@@ -199,71 +199,19 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	int row = point.getRow();
 	int col = point.getCol();
 
-	// TOP BOTTOM LEFT RIGHT check
-
-	// Check if we dont cross the TOP edge
-	if (row - 1 > 0) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col, row - 1) == FREE) {
-			q_neighbors.push(Point(col, row - 1));
-		}
-	}
-
-	// Check if we dont cross the BOTTOM edge
-	if (row + 1 < this->_grid.getRows()) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col, row + 1) == FREE) {
-			q_neighbors.push(Point(col, row + 1));
-		}
-	}
-
-	// Check if we dont cross the LEFT edge
-	if (col - 1 > 0) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col - 1, row) == FREE) {
-			q_neighbors.push(Point(col - 1, row));
-		}
-	}
-
-	// Check if we dont cross the RIGHT edge
-	if (col + 1 < this->_grid.getCols()) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col + 1, row) == FREE) {
-			q_neighbors.push(Point(col + 1, row));
-		}
-	}
-
-	// DIAGONAL check
-
-	// Check if we dont cross the TOP LEFT edge
-	if ((row - 1 > 0) && (col - 1 > 0)) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col - 1, row - 1) == FREE) {
-			q_neighbors.push(Point(col - 1, row - 1));
-		}
-	}
-
-	// Check if we dont cross the TOP RIGHT edge
-	if ((row - 1 > 0) && (col + 1 < this->_grid.getCols())) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col + 1, row - 1) == FREE) {
-			q_neighbors.push(Point(col + 1, row - 1));
-		}
-	}
-	// Check if we dont cross the BOTTOM LEFT edge
-	if ((row + 1 < this->_grid.getRows()) && (col - 1 > 0)) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col - 1, row + 1) == FREE) {
-			q_neighbors.push(Point(col - 1, row + 1));
-		}
-	}
-
-	// Check if we dont cross the BOTTOM RIGHT edge
-	if ((row + 1 < this->_grid.getRows())
-			&& (col + 1 < this->_grid.getCols())) {
-		// Check if the cell is free (empty), if it is, add it to neighbors
-		if (this->_grid.getCellValue(col + 1, row + 1) == FREE) {
-			q_neighbors.push(Point(col + 1, row + 1));
+	for(int cur_row=row-1;cur_row<=row+1;cur_row++)
+	{
+		for(int cur_col=col-1;cur_col<=col+1;cur_col++)
+		{
+			if((cur_row > 0) && (cur_row < this->_grid.getRows()) &&
+			   (cur_col > 0) && (cur_col < this->_grid.getCols()) &&
+			   (cur_row != row) && (cur_col != col))
+		   {
+				if (this->_grid.getCellValue(cur_row, cur_col) == FREE)
+				{
+					q_neighbors.push(Point(cur_row, cur_col));
+				}
+		   }
 		}
 	}
 

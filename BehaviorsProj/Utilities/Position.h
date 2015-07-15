@@ -10,19 +10,19 @@
 
 class Position {
 private:
-	double _x;
-	double _y;
+	double _row;
+	double _col;
 	double _yaw;
 public:
 	Position();
-	Position(double x, double y, double yaw);
+	Position(double row, double col, double yaw);
 	virtual ~Position();
 
-	double getX();
-	double getY();
+	double getRow();
+	double getCol();
 	double getYaw();
-	void setX(double x);
-	void setY(double y);
+	void setRow(double row);
+	void setCol(double col);
 	void setYaw(double yaw);
 };
 

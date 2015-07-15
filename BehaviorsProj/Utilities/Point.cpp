@@ -7,14 +7,14 @@
 
 #include "Point.h"
 
-Point::Point(int col, int row) {
-	this->_col = col;
+Point::Point(int row, int col) {
 	this->_row = row;
+	this->_col = col;
 }
 
 Point::Point() {
-	this->_col = 0;
 	this->_row = 0;
+	this->_col = 0;
 }
 
 Point::~Point() {
@@ -35,6 +35,6 @@ void Point::setRow(int row) {
 	this->_row = row;
 }
 bool Point::isEqual(Point point) {
-	return ((this->getCol() == point.getCol())
-			&& (this->getRow() == point.getRow()));
+	return ((this->getRow() == point.getRow()) &&
+			(this->getCol() == point.getCol()));
 }

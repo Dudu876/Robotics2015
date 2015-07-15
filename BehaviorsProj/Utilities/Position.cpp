@@ -9,15 +9,15 @@
 
 Position::Position()
 {
-	this->_x = 0;
-	this->_y = 0;
+	this->_row = 0;
+	this->_col = 0;
 	this->_yaw = 0;
 }
 
-Position::Position(double x, double y, double yaw)
+Position::Position(double row, double col, double yaw)
 {
-	this->_x = x;
-	this->_y = y;
+	this->_row = row;
+	this->_col = col;
 	this->_yaw = yaw;
 }
 
@@ -25,14 +25,14 @@ Position::~Position()
 {
 }
 
-double Position::getX()
+double Position::getRow()
 {
-	return this->_x;
+	return this->_row;
 }
 
-double Position::getY()
+double Position::getCol()
 {
-	return this->_y;
+	return this->_col;
 }
 
 double Position::getYaw()
@@ -40,14 +40,14 @@ double Position::getYaw()
 	return this->_yaw;
 }
 
-void Position::setX(double x)
+void Position::setRow(double row)
 {
-	this->_x = x;
+	this->_row = row;
 }
 
-void Position::setY(double y)
+void Position::setCol(double col)
 {
-	this->_y = y;
+	this->_col = col;
 }
 void Position::setYaw(double yaw)
 {

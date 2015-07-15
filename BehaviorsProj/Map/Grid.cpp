@@ -20,19 +20,20 @@ Grid::Grid(int rows, int cols, double resolution, unsigned height,
 	this->_gridCols = cols;
 	this->_gridResolution = resolution;
 
-	this->_startPosition = Position(start.getX(), start.getY(), start.getYaw());
-	this->_startPoint = Point(start.getX(), start.getY());
+	this->_startPosition = Position(start.getRow(), start.getCol(), start.getYaw());
+	this->_startPoint = Point(start.getRow(), start.getCol());
 	this->_goalPoint = Point(goal.getRow(), goal.getCol());
 
 	this->_grid = new int*[rows];
 
-	for (int i = 0; i < rows; ++i) {
-		this->_grid[i] = new int[cols];
+	for(int row = 0; row < rows; row++)
+	{
+		this->_grid[row] = new int[cols];
 	}
 
-	for (int i = 0; i < this->_gridRows; i++) {
-		for (int j = 0; j < this->_gridCols; j++) {
-			_grid[i][j] = FREE;
+	for (int row = 0; row < this->_gridRows; row++) {
+		for (int col = 0; col < this->_gridCols; col++) {
+			_grid[row][col] = FREE;
 		}
 	}
 }

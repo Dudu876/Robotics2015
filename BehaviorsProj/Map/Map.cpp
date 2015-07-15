@@ -162,18 +162,18 @@ Map::Map() {
 		}
 	}
 
-	int xStart, yStart, yawStart;
-	ConfigurationManager::getStartLocation(xStart, yStart, yawStart);
-	xStart = (xStart * mapResolution) / gridResolution;
-	yStart = (yStart * mapResolution) / gridResolution;
+	int colStart, rowStart, yawStart;
+	ConfigurationManager::getStartLocation(colStart, rowStart, yawStart);
+	rowStart = (rowStart * mapResolution) / gridResolution;
+	colStart = (colStart * mapResolution) / gridResolution;
 
-	int xGoal, yGoal;
-	ConfigurationManager::getGoal(xGoal, yGoal);
-	xGoal = (xGoal * mapResolution) / gridResolution;
-	yGoal = (yGoal * mapResolution) / gridResolution;
+	int colGoal, rowGoal;
+	ConfigurationManager::getGoal(colGoal, rowGoal);
+	rowGoal = (rowGoal * mapResolution) / gridResolution;
+	colGoal = (colGoal * mapResolution) / gridResolution;
 
-	Position startPosition = Position(xStart, yStart, yawStart);
-	Point goalPoint = Point(xGoal, yGoal);
+	Position startPosition = Position(rowStart, colStart, yawStart);
+	Point goalPoint = Point(rowGoal, colGoal);
 
 	this->_grid = Grid(grid_height, grid_width, gridResolution, height, width, startPosition, goalPoint);
 	this->_grid.initGridByMatrix(grid);

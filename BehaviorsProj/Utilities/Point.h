@@ -10,15 +10,15 @@
 
 class Point {
 private:
-	int _col;
 	int _row;
+	int _col;
 public:
 	Point();
-	Point(int col, int row);
-	void setCol(int col);
+	Point(int row, int col);
 	void setRow(int row);
-	int getCol();
+	void setCol(int col);
 	int getRow();
+	int getCol();
 	bool isEqual(Point point);
 	virtual ~Point();
 };
