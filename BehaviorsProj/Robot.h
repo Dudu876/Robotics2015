@@ -10,7 +10,8 @@
 
 #include <libplayerc++/playerc++.h>
 #include <string>
-#include "/Utilities/Global.h"
+#include "Utilities/Global.h"
+#include "Utilities/Position.h"
 using namespace PlayerCc;
 
 class Robot {
@@ -35,6 +36,8 @@ public:
 
 	float* getLaserScan();
 	int deg_to_index(double deg);
+
+	Position getPosition();
 };
 
 #endif /* ROBOT_H_ */

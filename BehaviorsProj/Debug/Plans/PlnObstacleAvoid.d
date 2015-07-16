@@ -13,7 +13,9 @@ Plans/PlnObstacleAvoid.d: ../Plans/PlnObstacleAvoid.cpp \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h ../Plans/Plan.h \
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
+ ../Plans/../Behaviors/../Utilities/Global.h \
+ ../Plans/../Behaviors/../Utilities/Position.h ../Plans/Plan.h \
  ../Plans/../Robot.h
 
 ../Plans/PlnObstacleAvoid.h:
@@ -47,6 +49,10 @@ Plans/PlnObstacleAvoid.d: ../Plans/PlnObstacleAvoid.cpp \
 /usr/local/include/player-2.0/libplayerc++/playererror.h:
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
+
+../Plans/../Behaviors/../Utilities/Global.h:
+
+../Plans/../Behaviors/../Utilities/Position.h:
 
 ../Plans/Plan.h:
 

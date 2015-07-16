@@ -52,3 +52,8 @@ int Robot::deg_to_index(double deg)
 {
 	return (deg + 120) / 0.36;
 }
+
+Position Robot::getPosition()
+{
+	return Position(this->_lastY,this->_lastX,this->_lastYaw);
+}

@@ -60,10 +60,8 @@ int main() {
 	};
 
 
-	//TODO: Fix.
-	Manager mgr = new Manager(&robot, ps->getWayPoints());
-//
-//	mgr.run();
+	Manager mgr = Manager(&robot, ps->getWayPoints());
+	mgr.run();
 
 //	static ConfigurationManager conf;
 //	Robot robot("localhost",6665);

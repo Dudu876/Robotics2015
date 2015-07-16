@@ -12,8 +12,11 @@ Manager.d: ../Manager.cpp ../Manager.h ../Plans/PlnObstacleAvoid.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h ../Plans/Plan.h \
- ../Plans/../Robot.h ../Robot.h
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
+ ../Plans/../Behaviors/../Utilities/Global.h \
+ ../Plans/../Behaviors/../Utilities/Position.h ../Plans/Plan.h \
+ ../Plans/../Robot.h ../Robot.h ../Utilities/Position.h \
+ ../Utilities/Global.h ../Utilities/Point.h
 
 ../Manager.h:
 
@@ -49,8 +52,18 @@ Manager.d: ../Manager.cpp ../Manager.h ../Plans/PlnObstacleAvoid.h \
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
 
+../Plans/../Behaviors/../Utilities/Global.h:
+
+../Plans/../Behaviors/../Utilities/Position.h:
+
 ../Plans/Plan.h:
 
 ../Plans/../Robot.h:
 
 ../Robot.h:
+
+../Utilities/Position.h:
+
+../Utilities/Global.h:
+
+../Utilities/Point.h:

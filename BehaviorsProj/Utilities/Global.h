@@ -14,7 +14,7 @@ using namespace std;
 #define ROTATION_SPEED 0.02
 #define FORWARD_SPEED_SLOW 0.2
 #define FORWARD_SPEED 0.4
-#define TOLERANCE_DISTANCE 1.7
+#define MINIMUM_DISTANCE 1.7
 
 // robot movement directions
 #define MOVE_FORWARD 0
@@ -34,6 +34,17 @@ using namespace std;
 #define PATH_CELL 2
 #define START_CELL 3
 #define GOAL_CELL 4
+
+// robot angle directions
+#define ANGLE_UP 1.57
+#define ANGLE_DOWN -1.57
+#define ANGLE_RIGHT 0
+#define ANGLE_LEFT -3.14
+#define ANGLE_UP_LEFT 2.425
+//#define ANGLE_UP_LEFT 2.356
+#define ANGLE_UP_RIGHT 0.785
+#define ANGLE_DOWN_LEFT -2.356
+#define ANGLE_DOWN_RIGHT -0.785
 
 class Global {
 public:
