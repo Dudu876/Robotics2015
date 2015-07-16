@@ -15,7 +15,7 @@ int main() {
 	Grid grid = map.getGrid();
 
 	//TODO: add start location & fix
-	//Robot robot("localhost", 6665);
+	Robot robot("localhost", 6665);
 
 	PathSearcher* ps = new PathSearcher(grid);
 
@@ -49,14 +49,19 @@ int main() {
 	vector<Position> waypoint = ps->getWayPoints();
 
 	//TODO: what the fuck is that?
+	// Print to file (image type) the grid with the way point on it
 	//grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
-	for (int i = 0; i < waypoint.size(); i++)
+
+	//TODO:: delete this code
+	// print waypoint for debug
+	for (unsigned i = 0; i < waypoint.size(); i++)
 	{
 		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
 	};
 
+
 	//TODO: Fix.
-//	Manager mgr = new Manager(&robot,ps->getWayPoints());
+	Manager mgr = new Manager(&robot, ps->getWayPoints());
 //
 //	mgr.run();
 

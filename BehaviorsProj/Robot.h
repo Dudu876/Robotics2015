@@ -10,14 +10,15 @@
 
 #include <libplayerc++/playerc++.h>
 #include <string>
+#include "/Utilities/Global.h"
 using namespace PlayerCc;
-using namespace std;
 
 class Robot {
 private:
 	PlayerClient _pc;
 	Position2dProxy _pp;
 	LaserProxy _lp;
+
 	float _lastX, _lastY, _lastYaw;
 
 public:

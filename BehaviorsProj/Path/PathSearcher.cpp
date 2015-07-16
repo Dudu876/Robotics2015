@@ -104,11 +104,11 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 						g_score[currentPoint.getRow()][currentPoint.getCol()]
 								+ 1;
 				/*
-				// if there are blocks around, add their scale to the temp_g_score
-				if (checkObstacleAround(
-						Point(currentPoint.getRow(), currentPoint.getCol()))) {
-					temp_g_score += SCALE_OF_OBSTACLE;
-				}*/
+				 // if there are blocks around, add their scale to the temp_g_score
+				 if (checkObstacleAround(
+				 Point(currentPoint.getRow(), currentPoint.getCol()))) {
+				 temp_g_score += SCALE_OF_OBSTACLE;
+				 }*/
 
 				// Check 1. if we didnt reach this point
 				//       2. if we already got to this point from another path and the current path is lower
@@ -136,7 +136,7 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 	}
 
 	this->_path = path;
-	//this->chooseWayPoints();
+	this->calculateWayPoints();
 	return path;
 
 }
@@ -199,19 +199,15 @@ queue<Point> PathSearcher::getPointNeighbors(Point point) {
 	int row = point.getRow();
 	int col = point.getCol();
 
-	for(int cur_row=row-1;cur_row<=row+1;cur_row++)
-	{
-		for(int cur_col=col-1;cur_col<=col+1;cur_col++)
-		{
-			if((cur_row > 0) && (cur_row < this->_grid.getRows()) &&
-			   (cur_col > 0) && (cur_col < this->_grid.getCols()) &&
-			   !((cur_row == row) && (cur_col == col)))
-		   {
-				if (this->_grid.getCellValue(cur_row, cur_col) == FREE)
-				{
+	for (int cur_row = row - 1; cur_row <= row + 1; cur_row++) {
+		for (int cur_col = col - 1; cur_col <= col + 1; cur_col++) {
+			if ((cur_row > 0) && (cur_row < this->_grid.getRows())
+					&& (cur_col > 0) && (cur_col < this->_grid.getCols())
+					&& !((cur_row == row) && (cur_col == col))) {
+				if (this->_grid.getCellValue(cur_row, cur_col) == FREE) {
 					q_neighbors.push(Point(cur_row, cur_col));
 				}
-		   }
+			}
 		}
 	}
 
@@ -230,119 +226,96 @@ bool PathSearcher::isPointInsideVector(vector<Point> vector, Point point) {
 	return false;
 }
 
-int PathSearcher::getNextWayPoint()
-{
+int PathSearcher::getNextWayPoint() {
 	int toReturn;
 	this->_last_Point++;
 
-	if (this->_last_Point != this->_path.size())
-	{
+	if (this->_last_Point != this->_path.size()) {
 		Point prev = this->_path[this->_last_Point - 1];
 		Point next = this->_path[this->_last_Point];
 
-		if (prev.getRow() == next.getRow())
-		{
-			if(prev.getCol() > next.getCol())
-			{
+		if (prev.getRow() == next.getRow()) {
+			if (prev.getCol() > next.getCol()) {
 				toReturn = LEFT;
-			}
-			else if(prev.getCol() < next.getCol())
-			{
+			} else if (prev.getCol() < next.getCol()) {
 				toReturn = RIGHT;
 			}
-		}
-		else if (prev.getCol() == next.getCol())
-		{
-			if (prev.getRow() > next.getRow())
-			{
+		} else if (prev.getCol() == next.getCol()) {
+			if (prev.getRow() > next.getRow()) {
 				toReturn = UP;
-			}
-			else if (prev.getRow() < next.getRow())
-			{
+			} else if (prev.getRow() < next.getRow()) {
 				toReturn = DOWN;
 			}
-		}
-		else
-		{
-			if(prev.getRow() > next.getRow())
-			{
-				if (prev.getCol() > next.getCol())
-				{
+		} else {
+			if (prev.getRow() > next.getRow()) {
+				if (prev.getCol() > next.getCol()) {
 					toReturn = UP_LEFT;
-				}
-				else
-				{
+				} else {
 					toReturn = UP_RIGHT;
 				}
-			}
-			else
-			{
-				if (prev.getCol() > next.getCol())
-				{
+			} else {
+				if (prev.getCol() > next.getCol()) {
 					toReturn = DOWN_LEFT;
-				}
-				else
-				{
+				} else {
 					toReturn = DOWN_RIGHT;
 				}
 			}
 		}
 
-		if (toReturn == this->_last_Direction)
-		{
+		if (toReturn == this->_last_Direction) {
 			toReturn = MOVE_FORWARD;
-		}
-		else
-		{
+		} else {
 			this->_last_Direction = toReturn;
 		}
-	}
-	else
-	{
+	} else {
 		toReturn = STOP;
 	}
 
 	return toReturn;
 }
 
-void PathSearcher::calculateWayPoints()
-{
+void PathSearcher::calculateWayPoints() {
+	// get the first direction
 	int direction = getNextWayPoint();
 
-	while(direction != STOP){
-		if(direction != MOVE_FORWARD)
-		{
-			this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
+	// Run until we stop (get to goal)
+	while (direction != STOP) {
+		// Check if the movement is not moving forward
+		if (direction != MOVE_FORWARD) {
+			//TODO: check if we need to enter real position
+			//this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
+			this->_wayPoints.addWayPoint(
+					Position(this->_path[_last_Point - 1].getRow(),
+							this->_path[_last_Point - 1].getCol(), 0));
 		}
 
 		direction = getNextWayPoint();
 	}
 
-	this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point -1]));
+	//this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point - 1]));
+	this->_wayPoints.addWayPoint(
+						Position(this->_path[_last_Point - 1].getRow(),
+								this->_path[_last_Point - 1].getCol(), 0));
 }
 
-Position PathSearcher::calcualteRealPosition(Point point)
-{
+Position PathSearcher::calcualteRealPosition(Point point) {
 	double gridResolution = this->_grid.getGridResolution();
 
 	double y = point.getRow() / gridResolution + 100 * gridResolution / 2;
 	double x = point.getCol() / gridResolution + 100 * gridResolution / 2;
 
-	return Position(x,y,0);
+	return Position(x, y, 0);
 }
 
-vector<Position> PathSearcher::getRealPath()
-{
+vector<Position> PathSearcher::getRealPath() {
 	vector<Position> realPath;
-	for (int i = 0; i< this->_path.size(); i++)
-	{
+	for (int i = 0; i < this->_path.size(); i++) {
 		realPath.push_back(calcualteRealPosition(this->_path[i]));
 	}
 
 	return realPath;
 }
 
-vector<Position> PathSearcher::getWayPoints()
-{
+vector<Position> PathSearcher::getWayPoints() {
 	return this->_wayPoints.getWayPoints();
 }
