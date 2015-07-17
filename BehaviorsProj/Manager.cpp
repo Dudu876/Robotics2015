@@ -12,8 +12,10 @@ Manager::Manager(Robot* robot, vector<Position> waypoints) {
 	_waypoints = waypoints;
 }
 void Manager::run() {
-	unsigned wayPointIndex = 0;
-	this->_robot->Read();
+	unsigned wayPointIndex 	= 0;
+
+	for (int i=0;i<20;i++)
+		this->_robot->Read();
 
 	// Get the first position of the robot (the start position)
 	Position currentPosition = this->_waypoints[wayPointIndex];
