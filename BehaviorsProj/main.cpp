@@ -58,7 +58,7 @@ int main() {
 		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
 	};
 
-	robot.setXAndY(waypoint[0].getCol(),waypoint[0].getRow());
+
 	robot.Read();
 	std::cout<< "test"<<endl;
 	cout<< robot.getX()<<endl;

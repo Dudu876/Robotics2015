@@ -4,7 +4,8 @@ Path/PathSearcher.d: ../Path/PathSearcher.cpp ../Path/PathSearcher.h \
  ../Path/../Map/../Utilities/Position.h ../Path/../Utilities/Point.h \
  ../Path/../Utilities/Global.h ../Path/../Path/WayPointsManager.h \
  ../Path/../Path/../Utilities/Global.h \
- ../Path/../Path/../Utilities/Position.h
+ ../Path/../Path/../Utilities/Position.h \
+ ../Path/../Path/../ConfigurationManager.h
 
 ../Path/PathSearcher.h:
 
@@ -25,3 +26,5 @@ Path/PathSearcher.d: ../Path/PathSearcher.cpp ../Path/PathSearcher.h \
 ../Path/../Path/../Utilities/Global.h:
 
 ../Path/../Path/../Utilities/Position.h:
+
+../Path/../Path/../ConfigurationManager.h:

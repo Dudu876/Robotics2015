@@ -137,6 +137,7 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 
 	this->_path = path;
 	this->calculateWayPoints();
+	this->_wayPoints.changeWaypointToImageResolution();
 	return path;
 
 }

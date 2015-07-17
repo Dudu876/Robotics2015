@@ -10,6 +10,7 @@
 #include <vector>
 #include "../Utilities/Global.h"
 #include "../Utilities/Position.h"
+#include "../ConfigurationManager.h"
 
 class WayPointsManager {
 private:
@@ -19,6 +20,7 @@ public:
 	virtual ~WayPointsManager();
 	vector<Position> getWayPoints();
 	void addWayPoint(Position waypoint);
+	void changeWaypointToImageResolution();
 };
 
 #endif /* WAYPOINTSMANAGER_H_ */
