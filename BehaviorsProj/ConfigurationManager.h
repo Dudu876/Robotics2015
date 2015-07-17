@@ -22,7 +22,7 @@ public:
 
 	ConfigurationManager();
 	static string getMapLocation();
-	static void getStartLocation(int& x, int& y, int& yaw);
+	static void getStartLocation(int& x, int& y, double& yaw);
 	static void getGoal(int &x, int &y);
 	static void getRobotSize(int& x, int& y);
 	static double getMapResolution();

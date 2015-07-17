@@ -28,7 +28,12 @@ Map::Map() {
 		cout << "decoder error " << error << ": " << lodepng_error_text(error)
 				<< endl;
 
-	int map[height][width];
+	this->_map = new int*[height];
+
+	// init grid
+	for (int i = 0; i < height; ++i) {
+		this->_map[i] = new int[width];
+	}
 
 	// Running over the image and transform it to matrix
 	for (int y = 0; y < height; y++) {
@@ -36,9 +41,9 @@ Map::Map() {
 			if (image[y * width * 4 + x * 4 + 0]
 					|| image[y * width * 4 + x * 4 + 1]
 					|| image[y * width * 4 + x * 4 + 2])
-				map[y][x] = FREE;
+				_map[y][x] = FREE;
 			else
-				map[y][x] = BLOCK;
+				_map[y][x] = BLOCK;
 		}
 	}
 
@@ -61,14 +66,13 @@ Map::Map() {
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			// Check if there is black cell
-			if (map[y][x] == BLOCK) {
+			if (_map[y][x] == BLOCK) {
 
 				// Run over the cell to puff
 				for (int pY = y - puffSize; pY < y + puffSize; pY++) {
 					// Check if we didnt exceed the matrix
 					if (pY >= 0 && pY < height) {
-						for (int pX = x - puffSize; pX < x + puffSize;
-								pX++) {
+						for (int pX = x - puffSize; pX < x + puffSize; pX++) {
 							// Check if we didnt exceed the matrix
 							if (pX >= 0 && pX < width) {
 								largeMap[pY][pX] = BLOCK;
@@ -145,7 +149,8 @@ Map::Map() {
 		}
 	}
 
-	int colStart, rowStart, yawStart;
+	int colStart, rowStart;
+	double yawStart;
 	ConfigurationManager::getStartLocation(colStart, rowStart, yawStart);
 	rowStart = (rowStart * mapResolution) / gridResolution;
 	colStart = (colStart * mapResolution) / gridResolution;
@@ -158,13 +163,18 @@ Map::Map() {
 	Position startPosition = Position(rowStart, colStart, yawStart);
 	Point goalPoint = Point(rowGoal, colGoal);
 
-	this->_grid = Grid(grid_height, grid_width, gridResolution, height, width, startPosition, goalPoint);
+	this->_grid = Grid(grid_height, grid_width, gridResolution, height, width,
+			startPosition, goalPoint);
 	this->_grid.initGridByMatrix(grid);
 
 }
 
 Grid Map::getGrid() {
 	return this->_grid;
+}
+
+int** Map::getMap() {
+	return this->_map;
 }
 
 void Map::loadMap() {

@@ -136,44 +136,49 @@ void Manager::changeDirection(Position currentPosition, Position nextPosition,
 
 double Manager::calcAngleDelta(Position currentPosition,
 		Position nextPosition) {
+
+	float ang = atan2(nextPosition.getRow() - currentPosition.getRow(),
+			nextPosition.getCol() - currentPosition.getCol());
+
+	return (180 - currentPosition.getYaw() - ang);
 	// calculate the next movement
-	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
-	double nextAngle;
+//	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
+//	double nextAngle;
+//
+//	// Choose the next angle by the next direction
+//	switch (nextDirection) {
+//	case UP:
+//		nextAngle = ANGLE_UP;
+//		break;
+//	case DOWN:
+//		nextAngle = ANGLE_DOWN;
+//		break;
+//	case RIGHT:
+//		nextAngle = ANGLE_RIGHT;
+//		break;
+//	case LEFT:
+//		nextAngle = ANGLE_LEFT;
+//		break;
+//	case UP_LEFT:
+//		nextAngle = ANGLE_UP_LEFT;
+//		break;
+//	case UP_RIGHT:
+//		nextAngle = ANGLE_UP_RIGHT;
+//		break;
+//	case DOWN_LEFT:
+//		nextAngle = ANGLE_DOWN_LEFT;
+//		break;
+//	case DOWN_RIGHT:
+//		nextAngle = ANGLE_DOWN_RIGHT;
+//		break;
+//	default:
+//		return -1;
+//	}
+//
+//	this->_robot->Read();
+//	double deltaAngle = nextAngle - this->_robot->getYaw();
 
-	// Choose the next angle by the next direction
-	switch (nextDirection) {
-	case UP:
-		nextAngle = ANGLE_UP;
-		break;
-	case DOWN:
-		nextAngle = ANGLE_DOWN;
-		break;
-	case RIGHT:
-		nextAngle = ANGLE_RIGHT;
-		break;
-	case LEFT:
-		nextAngle = ANGLE_LEFT;
-		break;
-	case UP_LEFT:
-		nextAngle = ANGLE_UP_LEFT;
-		break;
-	case UP_RIGHT:
-		nextAngle = ANGLE_UP_RIGHT;
-		break;
-	case DOWN_LEFT:
-		nextAngle = ANGLE_DOWN_LEFT;
-		break;
-	case DOWN_RIGHT:
-		nextAngle = ANGLE_DOWN_RIGHT;
-		break;
-	default:
-		return -1;
-	}
-
-	this->_robot->Read();
-	double deltaAngle = nextAngle - this->_robot->getYaw();
-
-	return (deltaAngle);
+//	return (deltaAngle);
 }
 
 int Manager::calcNextMovement(Position currentPosition, Position nextPosition) {

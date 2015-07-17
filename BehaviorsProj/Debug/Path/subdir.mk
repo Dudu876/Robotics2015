@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Path/Particales.cpp \
 ../Path/PathSearcher.cpp \
 ../Path/WayPointsManager.cpp 
 
 OBJS += \
+./Path/Particales.o \
 ./Path/PathSearcher.o \
 ./Path/WayPointsManager.o 
 
 CPP_DEPS += \
+./Path/Particales.d \
 ./Path/PathSearcher.d \
 ./Path/WayPointsManager.d 
 

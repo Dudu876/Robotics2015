@@ -56,11 +56,11 @@ string ConfigurationManager::getMapLocation() {
 	return (_configs.find("map")->second);
 }
 
-void ConfigurationManager::getStartLocation(int& x, int& y, int& yaw) {
+void ConfigurationManager::getStartLocation(int& x, int& y, double& yaw) {
 	vector<string> v = split(_configs.find("startLocation")->second, ' ');
 	x = atoi(((string)(v[0])).c_str());
 	y = atoi(((string)(v[1])).c_str());
-	yaw = atoi(((string)(v[2])).c_str());
+	yaw = atof(((string)(v[2])).c_str());
 }
 
 void ConfigurationManager::getGoal(int &x, int &y) {

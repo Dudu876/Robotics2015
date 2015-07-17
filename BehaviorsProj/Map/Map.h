@@ -17,6 +17,7 @@
 
 class Map {
 private:
+	int** _map;
 	Grid _grid;
 	string _filename;
 
@@ -26,6 +27,8 @@ public:
 	virtual ~Map();
 
 	Grid getGrid();
+	int** getMap();
+
 };
 
 #endif /* MAP_H_ */

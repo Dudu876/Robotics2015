@@ -40,7 +40,6 @@ int main() {
 		grid.setCellValue(path[i].getRow(),path[i].getCol(),PATH_CELL);
 	}
 
-
 	grid.setCellValue(grid.getStartPoint().getRow(),grid.getStartPoint().getCol(),START_CELL);
 	grid.setCellValue(grid.getGoalPoint().getRow(),grid.getGoalPoint().getCol(),GOAL_CELL);
 
@@ -59,6 +58,12 @@ int main() {
 		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
 	};
 
+	robot.setXAndY(waypoint[0].getCol(),waypoint[0].getRow());
+	robot.Read();
+	std::cout<< "test"<<endl;
+	cout<< robot.getX()<<endl;
+	cout<< robot.getY()<<endl;
+	cout<< robot.getYaw()<<endl;
 
 	Manager mgr = Manager(&robot, ps->getWayPoints());
 	mgr.run();

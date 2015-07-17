@@ -23,6 +23,11 @@ void Robot::setSpeed(float linear, float angular)
 	_pp.SetSpeed(linear, angular);
 }
 
+void Robot::setXAndY(float x, float y){
+	_lastX=x;
+	_lastY=y;
+}
+
 float Robot::getX()
 {
 	return _pp.GetXPos();

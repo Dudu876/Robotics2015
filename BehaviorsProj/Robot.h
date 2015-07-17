@@ -38,6 +38,9 @@ public:
 	int deg_to_index(double deg);
 
 	Position getPosition();
+
+	void setXAndY(float x, float y);
+
 };
 
 #endif /* ROBOT_H_ */
