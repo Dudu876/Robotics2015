@@ -35,13 +35,14 @@ int main() {
 	}
 
 	// sets path in grid matrix
-	for (int i = 0; i < path.size(); i++)
-	{
-		grid.setCellValue(path[i].getRow(),path[i].getCol(),PATH_CELL);
+	for (int i = 0; i < path.size(); i++) {
+		grid.setCellValue(path[i].getRow(), path[i].getCol(), PATH_CELL);
 	}
 
-	grid.setCellValue(grid.getStartPoint().getRow(),grid.getStartPoint().getCol(),START_CELL);
-	grid.setCellValue(grid.getGoalPoint().getRow(),grid.getGoalPoint().getCol(),GOAL_CELL);
+	grid.setCellValue(grid.getStartPoint().getRow(),
+			grid.getStartPoint().getCol(), START_CELL);
+	grid.setCellValue(grid.getGoalPoint().getRow(),
+			grid.getGoalPoint().getCol(), GOAL_CELL);
 
 	//TODO: bonus: grid.printMeSimanKria();
 
@@ -53,17 +54,18 @@ int main() {
 
 	//TODO:: delete this code
 	// print waypoint for debug
-	for (unsigned i = 0; i < waypoint.size(); i++)
-	{
-		cout << "( " << waypoint[i].getRow()  << " , " << waypoint[i].getCol() << " )" << endl;
+	for (unsigned i = 0; i < waypoint.size(); i++) {
+		cout << "( " << waypoint[i].getRow() << " , " << waypoint[i].getCol()
+				<< " )" << endl;
 	};
 
-
 	robot.Read();
-	std::cout<< "test"<<endl;
-	cout<< robot.getX()<<endl;
-	cout<< robot.getY()<<endl;
-	cout<< robot.getYaw()<<endl;
+	std::cout << "Robot position test" << endl;
+
+	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
+				<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+	cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
+				<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
 
 	Manager mgr = Manager(&robot, ps->getWayPoints());
 	mgr.run();
@@ -74,21 +76,19 @@ int main() {
 //	Manager manager(&robot, &plnOA);
 //	manager.run();
 
-
 	//TODO: remove this print (for debug only)
 	for (int y = 0; y < grid.getRows(); y++) {
 		for (int x = 0; x < grid.getCols(); x++) {
-			if(grid.getCellValue(y,x) == 8)
+			if (grid.getCellValue(y, x) == 8)
 				fprintf(fgrid, "*");
 			else
-				fprintf(fgrid, "%d", grid.getCellValue(y,x));
+				fprintf(fgrid, "%d", grid.getCellValue(y, x));
 			//cout << map[y][x];
 		}
 		fprintf(fgrid, "\n");
 		//cout << endl;
 	}
 	fclose(fgrid);
-
 
 	return 0;
 }

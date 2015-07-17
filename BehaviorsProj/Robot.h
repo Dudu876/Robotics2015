@@ -30,6 +30,14 @@ public:
 	float getX();
 	float getY();
 	float getYaw();
+
+	float getRealX();
+	float getRealY();
+	float getRealYaw();
+
+	void ChangeYawRobotPlayer(double dYaw);
+
+
 	void Read() {
 		_pc.Read();
 	}

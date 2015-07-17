@@ -12,9 +12,9 @@ Manager::Manager(Robot* robot, vector<Position> waypoints) {
 	_waypoints = waypoints;
 }
 void Manager::run() {
-	unsigned wayPointIndex 	= 0;
+	unsigned wayPointIndex = 0;
 
-	for (int i=0;i<20;i++)
+	for (int i = 0; i < 20; i++)
 		this->_robot->Read();
 
 	// Get the first position of the robot (the start position)
@@ -25,6 +25,9 @@ void Manager::run() {
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
 	// Change the movement direction of the robot
+	double angle = this->calcAngleDelta(currentPosition, nextPosition);
+	this->_robot->ChangeYawRobotPlayer(angle);
+
 	changeDirection(currentPosition, nextPosition, true);
 
 	double distance, currentDistance;
@@ -137,10 +140,30 @@ void Manager::changeDirection(Position currentPosition, Position nextPosition,
 double Manager::calcAngleDelta(Position currentPosition,
 		Position nextPosition) {
 
-	float ang = atan2(nextPosition.getRow() - currentPosition.getRow(),
-			nextPosition.getCol() - currentPosition.getCol());
+	// calculate the next movement
+	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
+	float ang;
+	this->_robot->Read();
+	float currentYawInDegree = (this->_robot->getYaw() * 180) / M_PI;
 
-	return (180 - currentPosition.getYaw() - ang);
+	switch (nextDirection) {
+	case UP_LEFT:
+		// get the angle in radian
+		ang = atan2(abs(currentPosition.getRow() - nextPosition.getRow()),
+				abs(currentPosition.getCol() - nextPosition.getCol()));
+		// change angle to degree
+		ang = (ang * 180)/M_PI;
+		// calc the delta degree
+		ang = 180 - currentYawInDegree - ang;
+		// change the degree to radian
+		ang = (ang * M_PI) / 180;
+		break;
+	default:
+		return -1;
+	}
+
+	return ang;
+
 	// calculate the next movement
 //	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
 //	double nextAngle;
