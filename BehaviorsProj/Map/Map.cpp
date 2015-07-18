@@ -66,6 +66,12 @@ Map::Map() {
 		this->_largeMap[i] = new int[width];
 	}
 
+	for (int i = 0; i < height; ++i) {
+		for (int j = 0; j < width; j++) {
+			this->_largeMap[i][j] = FREE;
+		}
+	}
+
 	//int largeMap[height][width];
 
 	// Running over the matrix map and puffy it
@@ -86,8 +92,6 @@ Map::Map() {
 						}
 					}
 				}
-			} else {
-				this->_largeMap[y][x] = FREE;
 			}
 		}
 	}

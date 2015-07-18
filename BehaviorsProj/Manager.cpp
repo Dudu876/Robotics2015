@@ -56,7 +56,7 @@ void Manager::run() {
 			currentDistance = distance;
 			distance = this->calcDistance(this->_robot->getPosition(),
 					nextPosition);
-
+			/*
 			// Run until we reach waypoint
 			while (distance <= currentDistance) {
 				// Read and set speed
@@ -67,7 +67,7 @@ void Manager::run() {
 				currentDistance = distance;
 				distance = this->calcDistance(this->_robot->getPosition(),
 						nextPosition);
-			}
+			}*/
 
 			// Stop the robot to change angle
 			this->_robot->setSpeed(0, 0);
