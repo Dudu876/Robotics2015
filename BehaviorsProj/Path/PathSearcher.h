@@ -27,6 +27,9 @@ private:
 
 	// Claculated path
 	vector<Point> _path;
+
+	int** createPowerGrid();
+
 public:
 	PathSearcher(Grid grid);
 	virtual ~PathSearcher();
@@ -42,6 +45,7 @@ public:
 	Position calcualteRealPosition(Point point);
 	vector<Position> getRealPath();
 	vector<Position> getWayPoints();
+
 
 
 };

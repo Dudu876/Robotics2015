@@ -12,16 +12,16 @@ Manager::Manager(Robot* robot, vector<Position> waypoints) {
 	_waypoints = waypoints;
 }
 void Manager::run() {
-	unsigned wayPointIndex = 0;
+	unsigned wayPointIndex = 1;
 
 	for (int i = 0; i < 20; i++)
 		this->_robot->Read();
 
 	// Get the first position of the robot (the start position)
-	Position currentPosition = this->_waypoints[wayPointIndex];
+	//Position currentPosition = this->_waypoints[wayPointIndex];
 
 	// Get the next waypoint position
-	wayPointIndex++;
+	//wayPointIndex++;
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
 	// Change the movement direction of the robot
@@ -43,67 +43,58 @@ void Manager::run() {
 
 		cout << "Distance between Waypoint (" << nextPosition.getRow() << ","
 				<< nextPosition.getCol() << ") to Robot ("
-				<< this->_robot->getY() << ", " << this->_robot->getX()
-				<< "," <<this->_robot->getYaw()<< ") is " << distance << endl;
+				<< this->_robot->getY() << ", " << this->_robot->getX() << ","
+				<< this->_robot->getYaw() << ") is " << distance << endl;
 
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
 
-			// move forawrd
-			this->_robot->setSpeed(FORWARD_SPEED_SLOW, 0);
+			//currentDistance = distance;
+			//distance = this->calcDistance(this->_robot->getPosition(),
+			//		nextPosition);
 
-			//
-			currentDistance = distance;
-			distance = this->calcDistance(this->_robot->getPosition(),
-					nextPosition);
-			/*
-			// Run until we reach waypoint
-			while (distance <= currentDistance) {
-				// Read and set speed
-				this->_robot->Read();
-				this->_robot->setSpeed(FORWARD_SPEED, 0);
+			/*// move forawrd
+			 this->_robot->setSpeed(FORWARD_SPEED_SLOW, 0);
+			 // Run until we reach waypoint
+			 while (distance <= currentDistance) {
+			 // Read and set speed
+			 this->_robot->Read();
+			 this->_robot->setSpeed(FORWARD_SPEED, 0);
 
-				// Calc the next distance
-				currentDistance = distance;
-				distance = this->calcDistance(this->_robot->getPosition(),
-						nextPosition);
-			}*/
+			 // Calc the next distance
+			 currentDistance = distance;
+			 distance = this->calcDistance(this->_robot->getPosition(),
+			 nextPosition);
+			 }*/
 
 			// Stop the robot to change angle
 			this->_robot->setSpeed(0, 0);
 
 			// Get the current waypoint (we just reached there)
-			currentPosition = this->_waypoints[wayPointIndex];
+			//currentPosition = this->_waypoints[wayPointIndex];
 
 			// Get the next waypoint
 			wayPointIndex++;
+
+			// Check if we reached the last waypoint (goal)
+			if (wayPointIndex == this->_waypoints.size()) {
+				break;
+			}
 			nextPosition = this->_waypoints[wayPointIndex];
 
+			// Change the movement direction of the robot
+			double angle = this->calcAngleDelta(this->_robot->getPosition(),
+					nextPosition);
+			this->_robot->ChangeYawRobotPlayer(angle);
+
 			//TODO: check why we send true?! we are not at the start
-			changeDirection(currentPosition, nextPosition, true);
+			//changeDirection(currentPosition, nextPosition, true);
 		} else {
 			this->_robot->setSpeed(FORWARD_SPEED, 0);
 		}
 	}
 
 	cout << "Goal point reached successfully" << endl;
-
-	/*
-	 * OLD CODE
-	 _robot->Read();
-	 if(!(_curr->startCond()))
-	 return;
-	 _curr->action();
-	 while(_curr !=NULL)
-	 {
-	 while(_curr->stopCond() == false)
-	 {
-	 _curr->action();
-	 _robot->Read();
-	 }
-	 _curr = _curr->selectNext();
-	 _robot->Read();
-	 }*/
 }
 
 Manager::~Manager() {
@@ -150,27 +141,51 @@ double Manager::calcAngleDelta(Position currentPosition,
 	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
 	float ang;
 	this->_robot->Read();
-	float currentYawInDegree = (this->_robot->getYaw() * 180) / M_PI;
+	//float currentYawInDegree = (this->_robot->getYaw() * 180) / M_PI;
+
+	// get the angle in radian
+	ang = atan2(abs(currentPosition.getRow() - nextPosition.getRow()),
+			abs(currentPosition.getCol() - nextPosition.getCol()));
+	// change angle to degree
+	//ang = (ang * 180) / M_PI;
 
 	switch (nextDirection) {
 	case UP_LEFT:
-		// get the angle in radian
-		ang = atan2(abs(currentPosition.getRow() - nextPosition.getRow()),
-				abs(currentPosition.getCol() - nextPosition.getCol()));
-		// change angle to degree
-		ang = (ang * 180) / M_PI;
 		// calc the delta degree
-		ang = 180 - currentYawInDegree - ang;
-		// change the degree to radian
-		ang = (ang * M_PI) / 180;
+		ang = M_PI - ang;
 		break;
+	case UP_RIGHT:
+		//ang = M_PI - 1.571 - ang;
+		//ang=ang;
+		break;
+	case DOWN_LEFT:
+		//ang = (M_PI - 1.571 - ang) + M_PI;
+		ang = M_PI + ang;
+		break;
+	case DOWN_RIGHT:
+		ang = 2 * M_PI - ang;
+	case UP:
+		ang = ANGLE_UP;
+		break;
+	case DOWN:
+		ang = ANGLE_DOWN;
+		break;
+	case LEFT:
+		ang = ANGLE_LEFT;
+		break;
+	case RIGHT:
+		ang = ANGLE_RIGHT;
+		break;
+
 	default:
 		return -1;
 	}
 
+// change the degree to radian
+//ang = (ang * M_PI) / 180;
 	return ang;
 
-	// calculate the next movement
+// calculate the next movement
 //	int nextDirection = this->calcNextMovement(currentPosition, nextPosition);
 //	double nextAngle;
 //
@@ -213,7 +228,7 @@ double Manager::calcAngleDelta(Position currentPosition,
 int Manager::calcNextMovement(Position currentPosition, Position nextPosition) {
 	int direction;
 
-	// Check if the next row is above the current (the direction will be DOWN* because the rows grows downward)
+// Check if the next row is above the current (the direction will be DOWN* because the rows grows downward)
 	if (nextPosition.getRow() > currentPosition.getRow()) {
 		// Check if the next col is right from current
 		if (nextPosition.getCol() > currentPosition.getCol()) {
@@ -228,7 +243,7 @@ int Manager::calcNextMovement(Position currentPosition, Position nextPosition) {
 		}
 	}
 
-	// Check if the next row is below the current (the direction will be UP* because the rows grows downward)
+// Check if the next row is below the current (the direction will be UP* because the rows grows downward)
 	else if (nextPosition.getRow() < currentPosition.getRow()) {
 		// Check if the next col is right from current
 		if (nextPosition.getCol() > currentPosition.getCol()) {
@@ -242,8 +257,8 @@ int Manager::calcNextMovement(Position currentPosition, Position nextPosition) {
 			direction = UP;
 		}
 	}
-	// If we reached to here, that means we are on the same row,
-	// so lets check if the next position is right/left from current position
+// If we reached to here, that means we are on the same row,
+// so lets check if the next position is right/left from current position
 	else {
 		if (nextPosition.getCol() > currentPosition.getCol()) {
 			direction = RIGHT;

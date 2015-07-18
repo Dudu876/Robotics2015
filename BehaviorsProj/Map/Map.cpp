@@ -31,7 +31,7 @@ Map::Map() {
 	this->_map = new int*[height];
 
 	// init map
-	for (int i = 0; i < height; ++i) {
+	for (int i = 0; i < height; i++) {
 		this->_map[i] = new int[width];
 	}
 
@@ -66,7 +66,7 @@ Map::Map() {
 		this->_largeMap[i] = new int[width];
 	}
 
-	for (int i = 0; i < height; ++i) {
+	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			this->_largeMap[i][j] = FREE;
 		}
@@ -118,7 +118,7 @@ Map::Map() {
 	int** grid = new int*[grid_height];
 
 	// init grid
-	for (int i = 0; i < grid_height; ++i) {
+	for (int i = 0; i < grid_height; i++) {
 		grid[i] = new int[grid_width];
 	}
 

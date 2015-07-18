@@ -9,6 +9,35 @@
 
 using namespace PlayerCc;
 
+void prindGridWithAstar(vector<Point> path, Grid grid) {
+	//Test the A* path
+	for (int i = 0; i < path.size(); i++) {
+		grid.setCellValue(path[i].getRow(), path[i].getCol(), 8);
+	}
+	grid.setCellValue(grid.getStartPoint().getRow(),
+			grid.getStartPoint().getCol(), START_CELL);
+	grid.setCellValue(grid.getGoalPoint().getRow(),
+			grid.getGoalPoint().getCol(), GOAL_CELL);
+	//printing the grid to file to check it
+	FILE* fgrid = fopen("grid.txt", "w");
+	if (fgrid == NULL) {
+		printf("Error opening file!\n");
+		exit(1);
+	}
+	for (int y = 0; y < grid.getRows(); y++) {
+		for (int x = 0; x < grid.getCols(); x++) {
+			if (grid.getCellValue(y, x) == 8)
+				fprintf(fgrid, "*");
+			else
+				fprintf(fgrid, "%d", grid.getCellValue(y, x));
+			//cout << map[y][x];
+		}
+		fprintf(fgrid, "\n");
+		//cout << endl;
+	}
+	fclose(fgrid);
+}
+
 int main() {
  	static ConfigurationManager conf;
 	Map map = Map();
@@ -38,33 +67,11 @@ int main() {
 			grid.getGoalPoint());
 
 	//Test the A* path
-	for (int i = 0; i < path.size(); i++) {
-		grid.setCellValue(path[i].getRow(), path[i].getCol(), 8);
-	}
-
-	//printing the grid to file to check it
-	FILE* fgrid = fopen("grid.txt", "w");
-	if (fgrid == NULL) {
-		printf("Error opening file!\n");
-		exit(1);
-	}
-
-	// sets path in grid matrix
-	for (int i = 0; i < path.size(); i++) {
-		grid.setCellValue(path[i].getRow(), path[i].getCol(), PATH_CELL);
-	}
-
-	grid.setCellValue(grid.getStartPoint().getRow(),
-			grid.getStartPoint().getCol(), START_CELL);
-	grid.setCellValue(grid.getGoalPoint().getRow(),
-			grid.getGoalPoint().getCol(), GOAL_CELL);
-
-	//TODO: bonus: grid.printMeSimanKria();
+	prindGridWithAstar(path, grid);
 
 	vector<Position> waypoint = ps->getWayPoints();
 
-	//TODO: what the fuck is that?
-	// Print to file (image type) the grid with the way point on it
+	// TODO: Print to file (image type) the grid with the way point on it
 	//grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
 
 	//TODO:: delete this code
@@ -74,29 +81,8 @@ int main() {
 				<< " )" << endl;
 	};
 
-
 	Manager mgr = Manager(&robot, ps->getWayPoints());
 	mgr.run();
-
-//	static ConfigurationManager conf;
-//	Robot robot("localhost",6665);
-//	PlnObstacleAvoid plnOA(&robot);
-//	Manager manager(&robot, &plnOA);
-//	manager.run();
-
-	//TODO: remove this print (for debug only)
-	for (int y = 0; y < grid.getRows(); y++) {
-		for (int x = 0; x < grid.getCols(); x++) {
-			if (grid.getCellValue(y, x) == 8)
-				fprintf(fgrid, "*");
-			else
-				fprintf(fgrid, "%d", grid.getCellValue(y, x));
-			//cout << map[y][x];
-		}
-		fprintf(fgrid, "\n");
-		//cout << endl;
-	}
-	fclose(fgrid);
 
 	return 0;
 }

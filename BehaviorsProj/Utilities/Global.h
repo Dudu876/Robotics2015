@@ -13,9 +13,9 @@ using namespace std;
 // movement
 #define ROTATION_SPEED 0.02
 #define FORWARD_SPEED_SLOW 0.2
-#define FORWARD_SPEED 1
+#define FORWARD_SPEED 0.2
 //#define MINIMUM_DISTANCE 1.7
-#define MINIMUM_DISTANCE 15
+#define MINIMUM_DISTANCE 2
 
 
 // robot movement directions

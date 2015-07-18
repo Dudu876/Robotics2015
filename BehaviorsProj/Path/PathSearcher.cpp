@@ -19,8 +19,63 @@ PathSearcher::~PathSearcher() {
 	// TODO Auto-generated destructor stub
 }
 
+int** PathSearcher::createPowerGrid() {
+	int** powerGrid = new int*[this->_grid.getRows()];
+	// init power grid
+	for (int i = 0; i < this->_grid.getRows(); i++) {
+		powerGrid[i] = new int[this->_grid.getCols()];
+	}
+	// insert values to grid
+	// Run over the grid
+	for (int nrow = 0; nrow < this->_grid.getRows(); nrow++) {
+		for (int ncol = 0; ncol < this->_grid.getCols(); ncol++) {
+			powerGrid[nrow][ncol] = 1;
+
+			// run over neighbors of 2*2
+			for (int nrow2 = nrow - 2; nrow2 <= nrow + 2; nrow2++) {
+				//check if the nrow2 is ok
+				if (nrow2 >= 0 && nrow2 < this->_grid.getRows()) {
+					//run over the cols
+					for (int ncol2 = ncol - 2; ncol2 <= ncol + 2; ncol2++) {
+						//check if the cols legel
+						if (ncol2 >= 0 && ncol2 < this->_grid.getCols()) {
+							// check if a neighbor is a block
+							if (this->_grid.getCellValue(nrow2, ncol2) == BLOCK) {
+								powerGrid[nrow][ncol] = 5;
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			// run over neighbors of 1*1
+			for (int nrow1 = nrow - 1; nrow1 <= nrow + 1; nrow1++) {
+				//check if the nrow2 is ok
+				if (nrow1 >= 0 && nrow1 < this->_grid.getRows()) {
+					//run over the cols
+					for (int ncol1 = ncol - 1; ncol1 <= ncol + 1; ncol1++) {
+						//check if the cols legel
+						if (ncol1 >= 0 && ncol1 < this->_grid.getCols()) {
+							// check if a neighbor is a block
+							if (this->_grid.getCellValue(nrow1, ncol1) == BLOCK) {
+								powerGrid[nrow][ncol] = 10;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return powerGrid;
+}
+
 // A* implementation
 vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
+
+	int** powerGrid = createPowerGrid();
 
 	// The set of tentative nodes to be evaluated, initially containing the start node
 	vector<Point> open_set;
@@ -102,7 +157,8 @@ vector<Point> PathSearcher::searchPath(Point startPoint, Point goalPoint) {
 				// Calc the tentative g score by add the distance between them (1)
 				double temp_g_score =
 						g_score[currentPoint.getRow()][currentPoint.getCol()]
-								+ 1;
+								+ powerGrid[neighborPoint.getRow()][neighborPoint.getCol()];
+				//+ 1;
 				/*
 				 // if there are blocks around, add their scale to the temp_g_score
 				 if (checkObstacleAround(
@@ -295,8 +351,8 @@ void PathSearcher::calculateWayPoints() {
 
 	//this->_wayPoints.addWayPoint(this->calcualteRealPosition(this->_path[_last_Point - 1]));
 	this->_wayPoints.addWayPoint(
-						Position(this->_path[_last_Point - 1].getRow(),
-								this->_path[_last_Point - 1].getCol(), 0));
+			Position(this->_path[_last_Point - 1].getRow(),
+					this->_path[_last_Point - 1].getCol(), 0));
 }
 
 Position PathSearcher::calcualteRealPosition(Point point) {

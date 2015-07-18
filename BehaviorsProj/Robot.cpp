@@ -80,7 +80,7 @@ Position Robot::getPosition() {
 void Robot::ChangeYawRobotPlayer(double dYaw) {
 	this->Read();
 	double currYaw = this->getYaw();
-	double wantedYaw = this->getYaw()+dYaw;
+	double wantedYaw = dYaw;
 
 	//currYaw += M_PI;
 	double absOffsetOne;
@@ -98,14 +98,21 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 		side = 1;
 	}
 
+	this->setSpeed(0.0, 0.10 * side);
+
 	while (true) {
 		this->Read();
 		currYaw = this->getYaw();
+
+		// Change the curr yaw :@
+		if(currYaw < 0){
+			currYaw = M_PI + (M_PI + currYaw);
+		}
+		cout<<"Wanted angle: "<< wantedYaw << " Robot Yaw: " <<currYaw<< endl;
 		//currYaw += M_PI;
-		this->setSpeed(0.0, 0.20 * side);
 
 		//if (currYaw > dYaw - 0.06 && currYaw < dYaw + 0.06) {
-		if (currYaw > wantedYaw - 0.06 && currYaw < wantedYaw + 0.06) {
+		if (currYaw > wantedYaw - 0.02 && currYaw < wantedYaw + 0.02) {
 			this->setSpeed(0.0, 0.0);
 			break;
 		}
