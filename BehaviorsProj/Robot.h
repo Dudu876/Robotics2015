@@ -27,6 +27,9 @@ public:
 	virtual ~Robot();
 
 	void setSpeed(float linear, float angular);
+	float getCol();
+	float getRow();
+
 	float getX();
 	float getY();
 	float getYaw();
@@ -36,10 +39,13 @@ public:
 	float getRealYaw();
 
 	void ChangeYawRobotPlayer(double dYaw);
+	void UpdatePosition(double x, double y, double yaw);
+
 
 
 	void Read() {
 		_pc.Read();
+		//cout << "Robot image read: (row, col, yaw) (" << getY() << ", "						<< getX() << ", " << getYaw() << ")" << endl;
 	}
 
 	float* getLaserScan();

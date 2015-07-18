@@ -10,12 +10,27 @@
 using namespace PlayerCc;
 
 int main() {
-	static ConfigurationManager conf;
+ 	static ConfigurationManager conf;
 	Map map = Map();
 	Grid grid = map.getGrid();
 
 	//TODO: add start location & fix
 	Robot robot("localhost", 6665);
+	robot.Read();
+
+	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
+				<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+
+	double initialRow = -2.875;
+	double initialCol = 2.175;
+	double initialYaw = 0.349;
+	robot.UpdatePosition(initialRow, initialCol,initialYaw);
+	robot.Read();
+
+	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
+					<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+	cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
+				<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
 
 	PathSearcher* ps = new PathSearcher(grid);
 
@@ -59,13 +74,6 @@ int main() {
 				<< " )" << endl;
 	};
 
-	robot.Read();
-	std::cout << "Robot position test" << endl;
-
-	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
-				<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
-	cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
-				<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
 
 	Manager mgr = Manager(&robot, ps->getWayPoints());
 	mgr.run();

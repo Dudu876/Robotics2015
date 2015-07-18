@@ -25,10 +25,11 @@ void Manager::run() {
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
 	// Change the movement direction of the robot
-	double angle = this->calcAngleDelta(currentPosition, nextPosition);
+	double angle = this->calcAngleDelta(this->_robot->getPosition(),
+			nextPosition);
 	this->_robot->ChangeYawRobotPlayer(angle);
 
-	changeDirection(currentPosition, nextPosition, true);
+	//changeDirection(currentPosition, nextPosition, true);
 
 	double distance, currentDistance;
 
@@ -39,6 +40,11 @@ void Manager::run() {
 		// Calcuate the metric distance between the robot and next position
 		distance = this->calcDistance(this->_robot->getPosition(),
 				nextPosition);
+
+		cout << "Distance between Waypoint (" << nextPosition.getRow() << ","
+				<< nextPosition.getCol() << ") to Robot ("
+				<< this->_robot->getY() << ", " << this->_robot->getX()
+				<< "," <<this->_robot->getYaw()<< ") is " << distance << endl;
 
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
@@ -105,8 +111,8 @@ Manager::~Manager() {
 }
 
 double Manager::calcDistance(Position currentPosition, Position nextPosition) {
-	double deltaRow = currentPosition.getRow() - nextPosition.getRow();
-	double deltaCol = currentPosition.getCol() - nextPosition.getCol();
+	double deltaRow = abs(currentPosition.getRow() - nextPosition.getRow());
+	double deltaCol = abs(currentPosition.getCol() - nextPosition.getCol());
 
 	return sqrt((pow(deltaRow, 2)) + (pow(deltaCol, 2)));
 }
@@ -152,7 +158,7 @@ double Manager::calcAngleDelta(Position currentPosition,
 		ang = atan2(abs(currentPosition.getRow() - nextPosition.getRow()),
 				abs(currentPosition.getCol() - nextPosition.getCol()));
 		// change angle to degree
-		ang = (ang * 180)/M_PI;
+		ang = (ang * 180) / M_PI;
 		// calc the delta degree
 		ang = 180 - currentYawInDegree - ang;
 		// change the degree to radian
