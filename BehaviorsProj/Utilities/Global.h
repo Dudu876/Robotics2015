@@ -11,13 +11,15 @@
 using namespace std;
 
 // movement
-#define ROTATION_SPEED 0.02
+#define ROTATION_SPEED 0.35
 #define FORWARD_SPEED_SLOW 0.2
-#define FORWARD_SPEED 0.2
-#define ROTATION_FORWARD_SPEED 0.05
+#define FORWARD_SPEED 0.3
+#define ROTATION_FORWARD_SPEED 0.12
 //#define MINIMUM_DISTANCE 1.7
-#define MINIMUM_DISTANCE 2
+#define MINIMUM_DISTANCE 12
 
+// Smooth
+#define MINIMUM_ANGLE 1
 
 // robot movement directions
 #define MOVE_FORWARD 0
@@ -37,6 +39,10 @@ using namespace std;
 #define PATH_CELL 2
 #define START_CELL 3
 #define GOAL_CELL 4
+
+//Grid Power
+#define NEAR_WALL 5
+#define ALMOST_NEAR_WALL 10
 
 // robot angle directions
 #define ANGLE_UP 1.57

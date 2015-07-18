@@ -68,7 +68,7 @@ void Manager::run() {
 			 }*/
 
 			// Stop the robot to change angle
-			this->_robot->setSpeed(0, 0);
+			//this->_robot->setSpeed(0, 0);
 
 			// Get the current waypoint (we just reached there)
 			//currentPosition = this->_waypoints[wayPointIndex];

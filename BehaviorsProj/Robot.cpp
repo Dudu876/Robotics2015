@@ -18,13 +18,12 @@ Robot::Robot(string ip, int port) :
 	double initialCol = 2.175;
 	double initialYaw = 0.349;
 
-	this->UpdatePosition(initialRow, initialCol,initialYaw);
+	this->UpdatePosition(initialRow, initialCol, initialYaw);
 
 	_pp.SetMotorEnable(true);
 
 	//Fix the player bug
-	for(int i=0;i<15;i++)
-	{
+	for (int i = 0; i < 15; i++) {
 		this->Read();
 	}
 }
@@ -41,7 +40,6 @@ void Robot::setXAndY(float x, float y) {
 	_lastX = x;
 	_lastY = y;
 }
-
 
 float Robot::getCol() {
 	return _pp.GetXPos() * 40 + 275;
@@ -95,6 +93,7 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 	this->Read();
 	double currYaw = this->getYaw();
 	double wantedYaw = dYaw;
+	double firstDeltaYaw = abs(wantedYaw - currYaw);
 
 	//currYaw += M_PI;
 	double absOffsetOne;
@@ -112,22 +111,33 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 		side = 1;
 	}
 
-	this->setSpeed(0.0, 0.10 * side);
+	if (firstDeltaYaw > MINIMUM_ANGLE) {
+		this->setSpeed(0.0, ROTATION_SPEED * side);
+	} else {
+		this->setSpeed(ROTATION_FORWARD_SPEED, ROTATION_SPEED * side);
+	}
 
 	while (true) {
 		this->Read();
 		currYaw = this->getYaw();
+		/*
+		if (abs(wantedYaw - currYaw) > MINIMUM_ANGLE) {
+			this->setSpeed(0.0, ROTATION_SPEED * side);
+		} else if(firstDeltaYaw > 1.571){
+			this->setSpeed(ROTATION_FORWARD_SPEED, ROTATION_SPEED * side);
+		}*/
 
-		// Change the curr yaw :@
-		if(currYaw < 0){
+		// Change the curr yaw cuz player yaw is not 0-->6.2 :@
+		if (currYaw < 0) {
 			currYaw = M_PI + (M_PI + currYaw);
 		}
-		cout<<"Wanted angle: "<< wantedYaw << " Robot Yaw: " <<currYaw<< endl;
+		cout << "Wanted angle: " << wantedYaw << " Robot Yaw: " << currYaw
+				<< "delta: "<< abs(wantedYaw-currYaw)<< endl;
 		//currYaw += M_PI;
 
 		//if (currYaw > dYaw - 0.06 && currYaw < dYaw + 0.06) {
-		if (currYaw > wantedYaw - 0.02 && currYaw < wantedYaw + 0.02) {
-			this->setSpeed(0.0, 0.0);
+		if (currYaw > wantedYaw - 0.05 && currYaw < wantedYaw + 0.05) {
+			//this->setSpeed(0.0, 0.0);
 			break;
 		}
 
@@ -139,7 +149,7 @@ void Robot::UpdatePosition(double row, double col, double yaw) {
 	double y = row;
 
 	//while (_pp.GetXPos() != x || _pp.GetYPos() != y || _pp.GetYPos() != yaw) {
-		_pp.SetOdometry(x, y, yaw);
-		this->Read();
+	_pp.SetOdometry(x, y, yaw);
+	this->Read();
 	//
 }

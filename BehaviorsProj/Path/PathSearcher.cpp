@@ -41,7 +41,7 @@ int** PathSearcher::createPowerGrid() {
 						if (ncol2 >= 0 && ncol2 < this->_grid.getCols()) {
 							// check if a neighbor is a block
 							if (this->_grid.getCellValue(nrow2, ncol2) == BLOCK) {
-								powerGrid[nrow][ncol] = 5;
+								powerGrid[nrow][ncol] = ALMOST_NEAR_WALL;
 								break;
 							}
 						}
@@ -59,7 +59,7 @@ int** PathSearcher::createPowerGrid() {
 						if (ncol1 >= 0 && ncol1 < this->_grid.getCols()) {
 							// check if a neighbor is a block
 							if (this->_grid.getCellValue(nrow1, ncol1) == BLOCK) {
-								powerGrid[nrow][ncol] = 10;
+								powerGrid[nrow][ncol] = NEAR_WALL;
 								break;
 							}
 						}
