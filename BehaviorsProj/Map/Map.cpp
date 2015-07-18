@@ -30,7 +30,7 @@ Map::Map() {
 
 	this->_map = new int*[height];
 
-	// init grid
+	// init map
 	for (int i = 0; i < height; ++i) {
 		this->_map[i] = new int[width];
 	}
@@ -60,7 +60,13 @@ Map::Map() {
 	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2);
 
 	// Creating large map for puff the original map
-	int largeMap[height][width];
+	this->_largeMap = new int*[height];
+	// init large map
+	for (int i = 0; i < height; ++i) {
+		this->_largeMap[i] = new int[width];
+	}
+
+	//int largeMap[height][width];
 
 	// Running over the matrix map and puffy it
 	for (int y = 0; y < height; y++) {
@@ -75,13 +81,13 @@ Map::Map() {
 						for (int pX = x - puffSize; pX < x + puffSize; pX++) {
 							// Check if we didnt exceed the matrix
 							if (pX >= 0 && pX < width) {
-								largeMap[pY][pX] = BLOCK;
+								this->_largeMap[pY][pX] = BLOCK;
 							}
 						}
 					}
 				}
 			} else {
-				largeMap[y][x] = FREE;
+				this->_largeMap[y][x] = FREE;
 			}
 		}
 	}
@@ -94,7 +100,7 @@ Map::Map() {
 	}
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			fprintf(f, "%d", largeMap[y][x]);
+			fprintf(f, "%d", this->_largeMap[y][x]);
 			//cout << map[y][x];
 		}
 		fprintf(f, "\n");
@@ -131,7 +137,7 @@ Map::Map() {
 							pX++) {
 						// Check if we didnt exceed the matrix
 						if (pX >= 0 && pX < width) {
-							if (largeMap[pY][pX] == BLOCK) {
+							if (this->_largeMap[pY][pX] == BLOCK) {
 								isBlack = true;
 								break;
 							}

@@ -18,6 +18,7 @@
 class Map {
 private:
 	int** _map;
+	int** _largeMap;
 	Grid _grid;
 	string _filename;
 
