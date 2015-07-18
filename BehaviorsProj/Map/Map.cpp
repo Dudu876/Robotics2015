@@ -23,6 +23,9 @@ Map::Map() {
 	// Decoding the image from the path we got earlier
 	unsigned error = lodepng::decode(image, width, height, this->_filename);
 
+	this->_width=width;
+	this->_height = height;
+
 	// If there's an error loading the image, display it
 	if (error)
 		cout << "decoder error " << error << ": " << lodepng_error_text(error)
@@ -57,7 +60,8 @@ Map::Map() {
 	ConfigurationManager::getRobotSize(robot_size_x, robot_size_y);
 
 	// creating the the puff size
-	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2);
+	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2)
+			+ 2;
 
 	// Creating large map for puff the original map
 	this->_largeMap = new int*[height];
@@ -185,6 +189,13 @@ Grid Map::getGrid() {
 
 int** Map::getMap() {
 	return this->_map;
+}
+
+int Map::getWidth() {
+	return this->_width;
+}
+int Map::getHeight() {
+	return this->_height;
 }
 
 void Map::loadMap() {

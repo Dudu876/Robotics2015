@@ -82,7 +82,8 @@ int main() {
 	};
 
 	Manager mgr = Manager(&robot, ps->getWayPoints());
-	mgr.run();
+	mgr.runOnPlayer();
+	//mgr.runOnRobot();
 
 	return 0;
 }

@@ -10,6 +10,9 @@
 
 using namespace std;
 
+// Particle
+#define MAX_PARTICLE 100
+
 // movement
 #define ROTATION_SPEED 0.35
 #define FORWARD_SPEED_SLOW 0.2
@@ -20,6 +23,7 @@ using namespace std;
 
 // Smooth
 #define MINIMUM_ANGLE 1
+#define ANGLE_RANGE 0.075
 
 // robot movement directions
 #define MOVE_FORWARD 0

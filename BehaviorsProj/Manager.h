@@ -21,7 +21,8 @@ class Manager {
 	vector<Position> _waypoints;
 public:
 	Manager(Robot* robot, vector<Position> waypoints);
-	void run();
+	void runOnPlayer();
+	void runOnRobot();
 	virtual ~Manager();
 
 private:

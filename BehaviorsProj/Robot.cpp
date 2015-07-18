@@ -136,7 +136,7 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 		//currYaw += M_PI;
 
 		//if (currYaw > dYaw - 0.06 && currYaw < dYaw + 0.06) {
-		if (currYaw > wantedYaw - 0.05 && currYaw < wantedYaw + 0.05) {
+		if (currYaw > wantedYaw - ANGLE_RANGE && currYaw < wantedYaw + ANGLE_RANGE) {
 			//this->setSpeed(0.0, 0.0);
 			break;
 		}

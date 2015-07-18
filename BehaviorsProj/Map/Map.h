@@ -21,6 +21,8 @@ private:
 	int** _largeMap;
 	Grid _grid;
 	string _filename;
+	int _width;
+	int _height;
 
 public:
 	Map();
@@ -29,6 +31,9 @@ public:
 
 	Grid getGrid();
 	int** getMap();
+
+	int getWidth();
+	int getHeight();
 
 };
 
