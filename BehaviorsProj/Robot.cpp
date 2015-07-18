@@ -9,10 +9,24 @@
 
 Robot::Robot(string ip, int port) :
 		_pc(ip, port), _pp(&_pc), _lp(&_pc) {
-	// TODO Auto-generated constructor stub
+
 	_lastX = _pp.GetXPos();
 	_lastY = _pp.GetYPos();
 	_lastYaw = _pp.GetYaw();
+
+	double initialRow = -2.875;
+	double initialCol = 2.175;
+	double initialYaw = 0.349;
+
+	this->UpdatePosition(initialRow, initialCol,initialYaw);
+
+	_pp.SetMotorEnable(true);
+
+	//Fix the player bug
+	for(int i=0;i<15;i++)
+	{
+		this->Read();
+	}
 }
 
 Robot::~Robot() {
