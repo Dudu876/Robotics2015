@@ -77,7 +77,8 @@ void Manager::runOnRobot() {
 	double angle = this->calcAngleDelta(this->getRobotPosition(),
 			nextPosition);
 
-	this->changeYawRobot(angle);
+	//this->changeYawRobot(angle);
+	this->_robot->ChangeYawRobotPlayer(angle);
 
 	double distance, currentDistance;
 
