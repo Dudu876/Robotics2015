@@ -13,21 +13,25 @@
 #include "Utilities/Position.h"
 #include "Utilities/Global.h"
 #include "Utilities/Point.h"
+#include "Particle.h"
+#include "Map/Map.h"
 #include <vector>
 #include <math.h>
 
 class LocalizationManager {
 private:
 	vector<Particle> _particles;
-	Map _map;
+	Map * _map;
+	Position _storePosition;
 
 	void addParticleFromVector(const vector<Particle>& childParticles);
+	void createParticlesFromParticle(Particle fromParticle, bool isVectorEmpty);
 
 public:
-	LocalizationManager(Position startPosition, Map map);
+	LocalizationManager(Position startPosition, Map * map);
 	virtual ~LocalizationManager();
-
 	Particle getHighestBeliefParticle();
+	void updateParticles(Position deltaPosition, float laserScan[]);
 };
 
 #endif /* LOCALIZATIONMANAGER_H_ */

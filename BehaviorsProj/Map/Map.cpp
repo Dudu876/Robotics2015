@@ -60,8 +60,8 @@ Map::Map() {
 	ConfigurationManager::getRobotSize(robot_size_x, robot_size_y);
 
 	// creating the the puff size
-	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2)
-			+ 2;
+	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2);
+			//+ 2;
 
 	// Creating large map for puff the original map
 	this->_largeMap = new int*[height];

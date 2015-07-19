@@ -12,6 +12,29 @@ using namespace std;
 
 // Particle
 #define MAX_PARTICLE 100
+#define MIU_FOR_BELIEF 1.1
+#define MAX_DISTANCE_FOR_PROB 0.2
+#define MAX_YAW_FOR_PROB 0.1
+#define BELIEF_TRASHHOLD 0.4
+
+//Laser
+
+#define LASER_MAX_DEGREE 240.0;
+#define LASER_READS_AMOUNT 666
+#define MAX_LEASER_DISTANCE  4.0
+#define PARTICLE_LASER_NOISE_IN_METER 0.25
+#define PARTICLE_LASER_NOISE_IN_CM 25
+
+/* LASER */
+const unsigned LASER_SLEASER_ARRAY_SIZE = 666;
+const double MIN_LEASER_DISTANCE = 0; // meters
+const double LASER_FRONT_SAMPLES_HALF = 75;
+const double OBJECTS_DISTANCE_FROM_LASER_METER = 0.65;
+const double START_RIGHT_RAYS_RANGE_ANGLE = -120;
+const double END_RIGHT_RAYS_RANGE_ANGLE = -60;
+const double START_LEFT_RAYS_RANGE_ANGLE = 60;
+const double END_LEFT_RAYS_RANGE_ANGLE = 120;
+
 
 // movement
 #define ROTATION_SPEED 0.35

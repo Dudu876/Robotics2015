@@ -103,8 +103,6 @@ void Manager::runOnRobot() {
 
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
-
-
 	// ~~~~~~~~
 	// Start moving
 	// ~~~~~~~~
