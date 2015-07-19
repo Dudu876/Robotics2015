@@ -21,6 +21,7 @@ private:
 	LaserProxy _lp;
 
 	float _lastX, _lastY, _lastYaw;
+	float _currX, _currY, _currYaw;
 
 public:
 	Robot(string ip, int port);
@@ -38,15 +39,14 @@ public:
 	float getRealY();
 	float getRealYaw();
 
+	Position*  getDeltaPosition();
+
 	void ChangeYawRobotPlayer(double dYaw);
 	void UpdatePosition(double x, double y, double yaw);
 
 
 
-	void Read() {
-		_pc.Read();
-		//cout << "Robot image read: (row, col, yaw) (" << getY() << ", "						<< getX() << ", " << getYaw() << ")" << endl;
-	}
+	void Read();
 
 	float* getLaserScan();
 	int deg_to_index(double deg);

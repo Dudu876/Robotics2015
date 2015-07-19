@@ -28,10 +28,11 @@ private:
 	void createParticlesFromParticle(Particle fromParticle, bool isVectorEmpty);
 
 public:
-	LocalizationManager(Position startPosition, Map * map);
+//	LocalizationManager();
+	LocalizationManager(Position * startPosition, Map * map);
 	virtual ~LocalizationManager();
 	Particle getHighestBeliefParticle();
-	void updateParticles(Position deltaPosition, float laserScan[]);
+	void updateParticles(Position * deltaPosition, float laserScan[]);
 };
 
 #endif /* LOCALIZATIONMANAGER_H_ */

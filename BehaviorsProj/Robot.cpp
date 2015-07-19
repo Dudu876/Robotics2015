@@ -13,6 +13,9 @@ Robot::Robot(string ip, int port) :
 	_lastX = _pp.GetXPos();
 	_lastY = _pp.GetYPos();
 	_lastYaw = _pp.GetYaw();
+	_currX = _pp.GetXPos();
+	_currY = _pp.GetYPos();
+	_currYaw = _pp.GetYaw();
 
 	double initialRow = -2.875;
 	double initialCol = 2.175;
@@ -30,6 +33,17 @@ Robot::Robot(string ip, int port) :
 
 Robot::~Robot() {
 	// TODO Auto-generated destructor stub
+}
+void Robot::Read() {
+	_lastX = _currX;
+	_lastY = _currY;
+	_lastYaw = _currYaw;
+
+	_pc.Read();
+
+	_currX = this->getX();
+	_currY = this->getY();
+	_currYaw = this->getYaw();
 }
 
 void Robot::setSpeed(float linear, float angular) {
@@ -89,6 +103,15 @@ Position Robot::getPosition() {
 	return Position(this->getY(), this->getX(), this->getYaw());
 }
 
+Position* Robot::getDeltaPosition() {
+
+	double deltaRow = this->_currY - this->_lastY;
+	double deltaCol = this->_currX - this->_lastX;
+	double deltaYaw = this->_currYaw - this->_lastYaw;
+
+	return new Position(deltaRow, deltaCol, deltaYaw);
+}
+
 void Robot::ChangeYawRobotPlayer(double dYaw) {
 	this->Read();
 	double currYaw = this->getYaw();
@@ -120,27 +143,21 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 	while (true) {
 		this->Read();
 		currYaw = this->getYaw();
-		/*
-		if (abs(wantedYaw - currYaw) > MINIMUM_ANGLE) {
-			this->setSpeed(0.0, ROTATION_SPEED * side);
-		} else if(firstDeltaYaw > 1.571){
-			this->setSpeed(ROTATION_FORWARD_SPEED, ROTATION_SPEED * side);
-		}*/
 
 		// Change the curr yaw cuz player yaw is not 0-->6.2 :@
 		if (currYaw < 0) {
 			currYaw = M_PI + (M_PI + currYaw);
 		}
 		cout << "Wanted angle: " << wantedYaw << " Robot Yaw: " << currYaw
-				<< "delta: "<< abs(wantedYaw-currYaw)<< endl;
+				<< "delta: " << abs(wantedYaw - currYaw) << endl;
 		//currYaw += M_PI;
 
 		//if (currYaw > dYaw - 0.06 && currYaw < dYaw + 0.06) {
-		if (currYaw > wantedYaw - ANGLE_RANGE && currYaw < wantedYaw + ANGLE_RANGE) {
+		if (currYaw > wantedYaw - ANGLE_RANGE
+				&& currYaw < wantedYaw + ANGLE_RANGE) {
 			//this->setSpeed(0.0, 0.0);
 			break;
 		}
-
 	}
 }
 

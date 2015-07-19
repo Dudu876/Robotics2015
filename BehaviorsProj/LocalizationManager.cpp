@@ -7,16 +7,16 @@
 
 #include "LocalizationManager.h"
 
-LocalizationManager::LocalizationManager(Position startPosition, Map * map) {
+LocalizationManager::LocalizationManager(Position * startPosition, Map * map) {
 	_map = map;
 	srand(time(NULL));
 
-	_storePosition = Position(startPosition.getRow(), startPosition.getCol(),
-			startPosition.getYaw());
+	_storePosition = Position(startPosition->getRow(), startPosition->getCol(),
+			startPosition->getYaw());
 
 	// create particles from start position
-	Particle startParticle = Particle(startPosition.getRow(),
-			startPosition.getCol(), startPosition.getYaw(), (float) (1),
+	Particle startParticle = Particle(startPosition->getRow(),
+			startPosition->getCol(), startPosition->getYaw(), (float) (1),
 			this->_map);
 	this->createParticlesFromParticle(startParticle, true);
 	//_particles.insert(_particles.end(), childParticles.begin(), childParticles.end());
@@ -62,13 +62,13 @@ Particle LocalizationManager::getHighestBeliefParticle() {
 	return bestParticle;
 }
 
-void LocalizationManager::updateParticles(Position deltaPosition,
+void LocalizationManager::updateParticles(Position * deltaPosition,
 		float laserScan[]) {
 
 	// store the position for restore
-	_storePosition.setRow(_storePosition.getRow() + deltaPosition.getRow());
-	_storePosition.setCol(_storePosition.getCol() + deltaPosition.getCol());
-	_storePosition.setYaw(_storePosition.getYaw() + deltaPosition.getYaw());
+	_storePosition.setRow(_storePosition.getRow() + deltaPosition->getRow());
+	_storePosition.setCol(_storePosition.getCol() + deltaPosition->getCol());
+	_storePosition.setYaw(_storePosition.getYaw() + deltaPosition->getYaw());
 
 	//vector<Particle> particlesForDelete;
 	vector<Particle> goodParticles;
@@ -78,8 +78,8 @@ void LocalizationManager::updateParticles(Position deltaPosition,
 
 		// update particle belief and get his new belief
 		currentParticleBelief = this->_particles[index].UpdateParticle(
-				deltaPosition.getRow(), deltaPosition.getCol(),
-				deltaPosition.getYaw(), laserScan);
+				deltaPosition->getRow(), deltaPosition->getCol(),
+				deltaPosition->getYaw(), laserScan);
 
 		// check if particle bellief is too low
 		if (currentParticleBelief < BELIEF_TRASHHOLD) {

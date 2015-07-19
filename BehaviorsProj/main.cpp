@@ -6,6 +6,8 @@
 #include "Map/Grid.h"
 #include "Path/PathSearcher.h"
 #include "Manager.h"
+#include "LocalizationManager.h"
+#include "Particle.h"
 
 using namespace PlayerCc;
 
@@ -39,27 +41,34 @@ void prindGridWithAstar(vector<Point> path, Grid grid) {
 }
 
 int main() {
- 	static ConfigurationManager conf;
+	static ConfigurationManager conf;
+
+	int colStart, rowStart;
+	double yawStart;
+	ConfigurationManager::getStartLocation(colStart, rowStart, yawStart);
+	yawStart = DEGREE_TO_RADIAN(yawStart);
+
+	Position *  startPosition = new Position(rowStart, colStart, yawStart);
+
 	Map map = Map();
 	Grid grid = map.getGrid();
 
-	//TODO: add start location & fix
 	Robot robot("localhost", 6665);
 	robot.Read();
 
 	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
-				<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+			<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
 
 	double initialRow = -2.875;
 	double initialCol = 2.175;
 	double initialYaw = 0.349;
-	robot.UpdatePosition(initialRow, initialCol,initialYaw);
+	robot.UpdatePosition(initialRow, initialCol, initialYaw);
 	robot.Read();
 
 	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
-					<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+			<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
 	cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
-				<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
+			<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
 
 	PathSearcher* ps = new PathSearcher(grid);
 
@@ -81,9 +90,14 @@ int main() {
 				<< " )" << endl;
 	};
 
-	Manager mgr = Manager(&robot, ps->getWayPoints());
-	mgr.runOnPlayer();
-	//mgr.runOnRobot();
-
+	LocalizationManager * localizationManager = new LocalizationManager(
+			startPosition, &map);
+	Manager * mgr = new Manager(&robot, ps->getWayPoints(),
+			localizationManager);
+	if (PLAYER) {
+		mgr->runOnPlayer();
+	} else {
+		mgr->runOnRobot();
+	}
 	return 0;
 }

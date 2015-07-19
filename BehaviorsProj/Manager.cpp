@@ -7,10 +7,13 @@
 
 #include "Manager.h"
 
-Manager::Manager(Robot* robot, vector<Position> waypoints) {
+Manager::Manager(Robot* robot, vector<Position> waypoints,
+		LocalizationManager * locManager) {
 	_robot = robot;
 	_waypoints = waypoints;
+	_localizationManager = locManager;
 }
+
 void Manager::runOnPlayer() {
 	unsigned wayPointIndex = 1;
 
@@ -70,28 +73,26 @@ void Manager::runOnRobot() {
 
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
-	// ~~~~~~~~
-	// Start moving
-	// ~~~~~~~~
 	// Change the movement direction of the robot
-	double angle = this->calcAngleDelta(this->_robot->getPosition(),
+	double angle = this->calcAngleDelta(this->getRobotPosition(),
 			nextPosition);
-	this->_robot->ChangeYawRobotPlayer(angle);
+
+	this->changeYawRobot(angle);
 
 	double distance, currentDistance;
 
 	// Run until we didnt reached the last waypoint (goal)
 	while (wayPointIndex < this->_waypoints.size()) {
-		this->_robot->Read();
+		this->readOnRobot();
 
 		// Calcuate the metric distance between the robot and next position
-		distance = this->calcDistance(this->_robot->getPosition(),
+		distance = this->calcDistance(this->getRobotPosition(),
 				nextPosition);
 
 		cout << "Distance between Waypoint (" << nextPosition.getRow() << ","
 				<< nextPosition.getCol() << ") to Robot ("
-				<< this->_robot->getY() << ", " << this->_robot->getX() << ","
-				<< this->_robot->getYaw() << ") is " << distance << endl;
+				<< this->getRobotPosition().getRow() << ", " << this->getRobotPosition().getCol() << ","
+				<< this->getRobotPosition().getYaw() << ") is " << distance << endl;
 
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
@@ -105,12 +106,11 @@ void Manager::runOnRobot() {
 			nextPosition = this->_waypoints[wayPointIndex];
 
 			// Change the movement direction of the robot
-			double angle = this->calcAngleDelta(this->_robot->getPosition(),
+			double angle = this->calcAngleDelta(this->getRobotPosition(),
 					nextPosition);
-			this->_robot->ChangeYawRobotPlayer(angle);
 
-			//TODO: check why we send true?! we are not at the start
-			//changeDirection(currentPosition, nextPosition, true);
+			this->changeYawRobot(angle);
+
 		} else {
 			this->_robot->setSpeed(FORWARD_SPEED, 0);
 		}
@@ -118,6 +118,65 @@ void Manager::runOnRobot() {
 
 	cout << "Goal point reached successfully" << endl;
 }
+void Manager::changeYawRobot(double dYaw) {
+	this->readOnRobot();
+
+	double currYaw = this->getRobotPosition().getYaw();
+	double wantedYaw = dYaw;
+	double firstDeltaYaw = abs(wantedYaw - currYaw);
+
+	double absOffsetOne;
+
+	int side = 0;
+
+	absOffsetOne = currYaw - dYaw;
+	if (absOffsetOne < 0) {
+		absOffsetOne += M_PI * 2;
+	}
+
+	if (absOffsetOne < M_PI) {
+		side = -1;
+	} else {
+		side = 1;
+	}
+
+	if (firstDeltaYaw > MINIMUM_ANGLE) {
+		_robot->setSpeed(0.0, ROTATION_SPEED * side);
+	} else {
+		_robot->setSpeed(ROTATION_FORWARD_SPEED, ROTATION_SPEED * side);
+	}
+
+	while (true) {
+		this->readOnRobot();
+		currYaw = this->getRobotPosition().getYaw();
+
+		// Change the curr yaw cuz player yaw is not 0-->6.2 :@
+		if (currYaw < 0) {
+			currYaw = M_PI + (M_PI + currYaw);
+		}
+		cout << "Wanted angle: " << wantedYaw << " Robot Yaw: " << currYaw
+				<< " delta: " << abs(wantedYaw - currYaw) << endl;
+
+		if (currYaw > wantedYaw - ANGLE_RANGE
+				&& currYaw < wantedYaw + ANGLE_RANGE) {
+			break;
+		}
+	}
+}
+
+void Manager::readOnRobot() {
+	_robot->Read();
+	_localizationManager->updateParticles(_robot->getDeltaPosition(),_robot->getLaserScan());
+}
+
+Position Manager::getRobotPosition() {
+	if (PLAYER) {
+		return _robot->getPosition();
+	}
+
+	return _localizationManager->getHighestBeliefParticle().getPosition();
+}
+
 Manager::~Manager() {
 	// TODO Auto-generated destructor stub
 }

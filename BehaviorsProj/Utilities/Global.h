@@ -10,7 +10,11 @@
 
 using namespace std;
 
+#define PLAYER 0
+
+
 // Particle
+#define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
 #define MAX_PARTICLE 100
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2

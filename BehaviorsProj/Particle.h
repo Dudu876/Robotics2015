@@ -9,8 +9,6 @@
 #define PARTICLE_H_
 
 #define METER_TO_CM(meter)				(meter * 100)
-#define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-
 
 #include <cmath>
 #include <iostream>

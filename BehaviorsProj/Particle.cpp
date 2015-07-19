@@ -21,7 +21,8 @@ Particle::Particle(Position pos, float belief, Map* map) {
 	this->_position = createPositionRandomly(pos);
 
 	// run until we get particle not on block
-	while (this->_map->getMap()[(int)_position.getRow()][(int)_position.getCol()] == BLOCK) {
+	while (this->_map->getMap()[(int) _position.getRow()][(int) _position.getCol()]
+			== BLOCK) {
 		this->_position = createPositionRandomly(pos);
 	}
 }
@@ -49,11 +50,15 @@ Position Particle::createPositionRandomly(Position currentPosition) {
 	// Calc range of delta particle
 	int rowRange = floor(_map->getHeight() / 2 * 0.015);
 	int colRange = floor(_map->getWidth() / 2 * 0.015);
-	int YawRange = floor(M_PI * 2 / 2 * 0.1);
+	double YawRange = M_PI * 2 / 2 * 0.1;
 
-	int deltaRow = (rand() % 2 * rowRange) - rowRange;
-	int deltaCol = (rand() % 2 * colRange) - colRange;
-	int deltaYaw = (rand() % 2 * YawRange) - YawRange;
+	int intYawRange = YawRange * 10000;
+
+	int deltaRow = (rand() % (2 * rowRange)) - rowRange;
+	int deltaCol = (rand() % (2 * colRange)) - colRange;
+	double deltaYaw = (rand() % (2 * intYawRange)) - intYawRange;
+
+	deltaYaw = deltaYaw / 10000;
 
 	Position randomLocation = Position(currentPosition.getRow() + deltaRow,
 			currentPosition.getCol() + deltaCol,

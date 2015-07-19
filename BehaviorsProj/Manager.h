@@ -12,18 +12,23 @@
 #include "Utilities/Position.h"
 #include "Utilities/Global.h"
 #include "Utilities/Point.h"
+#include "LocalizationManager.h"
+#include "Particle.h"
 #include <vector>
 #include <math.h>
 
 class Manager {
-	Behavior* _curr;
 	Robot* _robot;
 	vector<Position> _waypoints;
+	LocalizationManager * _localizationManager;
 public:
-	Manager(Robot* robot, vector<Position> waypoints);
+	Manager(Robot* robot, vector<Position> waypoints, LocalizationManager * locManager);
 	void runOnPlayer();
 	void runOnRobot();
 	virtual ~Manager();
+	void readOnRobot();
+	void changeYawRobot(double dYaw);
+	Position getRobotPosition();
 
 private:
 	double calcDistance(Position currentPosition, Position nextPosition);
