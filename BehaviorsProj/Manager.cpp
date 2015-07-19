@@ -17,19 +17,12 @@ void Manager::runOnPlayer() {
 	for (int i = 0; i < 20; i++)
 		this->_robot->Read();
 
-	// Get the first position of the robot (the start position)
-	//Position currentPosition = this->_waypoints[wayPointIndex];
-
-	// Get the next waypoint position
-	//wayPointIndex++;
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
 	// Change the movement direction of the robot
 	double angle = this->calcAngleDelta(this->_robot->getPosition(),
 			nextPosition);
 	this->_robot->ChangeYawRobotPlayer(angle);
-
-	//changeDirection(currentPosition, nextPosition, true);
 
 	double distance, currentDistance;
 
@@ -49,29 +42,6 @@ void Manager::runOnPlayer() {
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
 
-			//currentDistance = distance;
-			//distance = this->calcDistance(this->_robot->getPosition(),
-			//		nextPosition);
-
-			/*// move forawrd
-			 this->_robot->setSpeed(FORWARD_SPEED_SLOW, 0);
-			 // Run until we reach waypoint
-			 while (distance <= currentDistance) {
-			 // Read and set speed
-			 this->_robot->Read();
-			 this->_robot->setSpeed(FORWARD_SPEED, 0);
-
-			 // Calc the next distance
-			 currentDistance = distance;
-			 distance = this->calcDistance(this->_robot->getPosition(),
-			 nextPosition);
-			 }*/
-
-			// Stop the robot to change angle
-			//this->_robot->setSpeed(0, 0);
-			// Get the current waypoint (we just reached there)
-			//currentPosition = this->_waypoints[wayPointIndex];
-			// Get the next waypoint
 			wayPointIndex++;
 
 			// Check if we reached the last waypoint (goal)
@@ -84,9 +54,6 @@ void Manager::runOnPlayer() {
 			double angle = this->calcAngleDelta(this->_robot->getPosition(),
 					nextPosition);
 			this->_robot->ChangeYawRobotPlayer(angle);
-
-			//TODO: check why we send true?! we are not at the start
-			//changeDirection(currentPosition, nextPosition, true);
 		} else {
 			this->_robot->setSpeed(FORWARD_SPEED, 0);
 		}
