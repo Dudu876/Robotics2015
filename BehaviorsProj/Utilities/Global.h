@@ -10,7 +10,8 @@
 
 using namespace std;
 
-#define PLAYER 1
+#define PLAYER 0
+#define DEBUG 0
 
 
 // Particle

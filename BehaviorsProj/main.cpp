@@ -57,8 +57,11 @@ int main() {
 	//Robot robot("10.10.245.65", 6665);
 	robot.Read();
 
-	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
-			<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
+	if (DEBUG) {
+		cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
+				<< robot.getRealX() << ", " << robot.getRealYaw() << ")"
+				<< endl;
+	}
 
 	double initialRow = -2.875;
 	double initialCol = 2.175;
@@ -69,35 +72,42 @@ int main() {
 		robot.Read();
 	}
 
-	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
-			<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;
-	cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
-			<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
+	if (DEBUG) {
+		cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
+				<< robot.getRealX() << ", " << robot.getRealYaw() << ")"
+				<< endl;
+		cout << "Robot image read: (row, col, yaw) (" << robot.getY() << ", "
+				<< robot.getX() << ", " << robot.getYaw() << ")" << endl;
+	}
 
 	PathSearcher* ps = new PathSearcher(grid);
 
 	vector<Point> path = ps->searchPath(grid.getStartPoint(),
 			grid.getGoalPoint());
 
-	//Test the A* path
-	prindGridWithAstar(path, grid);
+	if (DEBUG) {
+		//Test the A* path
+		prindGridWithAstar(path, grid);
+	}
 
 	vector<Position> waypoint = ps->getWayPoints();
 
 	// TODO: Print to file (image type) the grid with the way point on it
 	//grid.setColorizeWaypoints(map.getPuffedMap(),map.getWidth(),map.getHeight(), ps->getRealPath());
 
-	//TODO:: delete this code
-	// print waypoint for debug
-	for (unsigned i = 0; i < waypoint.size(); i++) {
-		cout << "( " << waypoint[i].getRow() << " , " << waypoint[i].getCol()
-				<< " )" << endl;
-	};
+	if (DEBUG) {
+		// print waypoint for debug
+		for (unsigned i = 0; i < waypoint.size(); i++) {
+			cout << "( " << waypoint[i].getRow() << " , "
+					<< waypoint[i].getCol() << " )" << endl;
+		};
+	}
 
-	LocalizationManager * localizationManager = new LocalizationManager(
-			startPosition, &map);
+	LocalizationManager * localizationManager = new LocalizationManager(startPosition, &map);
+
 	Manager * mgr = new Manager(&robot, ps->getWayPoints(),
 			localizationManager);
+
 	if (PLAYER) {
 		mgr->runOnPlayer();
 	} else {

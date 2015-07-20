@@ -37,11 +37,13 @@ void Manager::runOnPlayer() {
 		distance = this->calcDistance(this->_robot->getPosition(),
 				nextPosition);
 
-		cout << "Distance between Waypoint (" << nextPosition.getRow() << ","
-				<< nextPosition.getCol() << ") to Robot ("
-				<< this->_robot->getY() << ", " << this->_robot->getX() << ","
-				<< this->_robot->getYaw() << ") is " << distance << endl;
-
+		if (DEBUG) {
+			cout << "Distance between Waypoint (" << nextPosition.getRow()
+					<< "," << nextPosition.getCol() << ") to Robot ("
+					<< this->_robot->getY() << ", " << this->_robot->getX()
+					<< "," << this->_robot->getYaw() << ") is " << distance
+					<< endl;
+		}
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
 
@@ -69,7 +71,7 @@ void Manager::runOnRobot() {
 	unsigned wayPointIndex = 1;
 
 	/*for (int i = 0; i < 20; i++)
-		this->_robot->Read();*/
+	 this->_robot->Read();*/
 
 	Position nextPosition = this->_waypoints[wayPointIndex];
 
@@ -88,11 +90,14 @@ void Manager::runOnRobot() {
 		// Calcuate the metric distance between the robot and next position
 		distance = this->calcDistance(this->getRobotPosition(), nextPosition);
 
-		/*cout << "Distance between Waypoint (" << nextPosition.getRow() << ","
-		 << nextPosition.getCol() << ") to Robot ("
-		 << this->getRobotPosition().getRow() << ", " << this->getRobotPosition().getCol() << ","
-		 << this->getRobotPosition().getYaw() << ") is " << distance << endl;
-		 */
+		if (DEBUG) {
+			cout << "Distance between Waypoint (" << nextPosition.getRow()
+					<< "," << nextPosition.getCol() << ") to Robot ("
+					<< this->getRobotPosition().getRow() << ", "
+					<< this->getRobotPosition().getCol() << ","
+					<< this->getRobotPosition().getYaw() << ") is " << distance
+					<< endl;
+		}
 		// Check if the distance of the robot the next waypoint is less than the minimum distance
 		if (distance <= MINIMUM_DISTANCE) {
 			// Get the next waypoint
@@ -153,10 +158,12 @@ void Manager::changeYawRobot(double dYaw) {
 		if (currYaw < 0) {
 			currYaw = M_PI + (M_PI + currYaw);
 		}
-		cout << "Wanted angle: " << wantedYaw << " Particle Yaw: " << currYaw << " Robot Yaw: " << _robot->getRealYaw()
-		<< " Pdelta: " << abs(wantedYaw - currYaw)<< " Rdelta: " << _robot->getDeltaPosition()->getYaw()
-				<<endl;
-		//cout<< currYaw << endl;
+		if (DEBUG) {
+			cout << "Wanted angle: " << wantedYaw << " Particle Yaw: "
+					<< currYaw << " Robot Yaw: " << _robot->getRealYaw()
+					<< " Pdelta: " << abs(wantedYaw - currYaw) << " Rdelta: "
+					<< _robot->getDeltaPosition()->getYaw() << endl;
+		}
 
 		if (currYaw > wantedYaw - ANGLE_RANGE
 				&& currYaw < wantedYaw + ANGLE_RANGE) {
@@ -167,7 +174,7 @@ void Manager::changeYawRobot(double dYaw) {
 
 void Manager::readOnRobot() {
 	//for (int i = 0; i < 5; i++) {
-		_robot->Read();
+	_robot->Read();
 	//}
 	_localizationManager->updateParticles(_robot->getDeltaPosition(),
 			_robot->getLaserScan());
