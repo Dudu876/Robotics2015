@@ -65,7 +65,7 @@ void Manager::runOnPlayer() {
 	}
 
 	cout << "Goal point reached successfully" << endl;
-	this->_robot->setSpeed(0, 3);
+	this->_robot->setSpeed(0, 0.5);
 }
 
 void Manager::runOnRobot() {
@@ -80,7 +80,8 @@ void Manager::runOnRobot() {
 	double angle = this->calcAngleDelta(this->getRobotPosition(), nextPosition);
 
 	this->changeYawRobot(angle);
-	//this->_robot->ChangeYawRobotPlayer(angle);
+
+	this->_robot->setSpeed(FORWARD_SPEED, 0);
 
 	double distance, currentDistance;
 
@@ -116,13 +117,14 @@ void Manager::runOnRobot() {
 
 			this->changeYawRobot(angle);
 
-		} else {
 			this->_robot->setSpeed(FORWARD_SPEED, 0);
+		} else {
 		}
 	}
 
 	cout << "Goal point reached successfully" << endl;
-	this->_robot->setSpeed(0, 3);
+	this->_robot->setSpeed(0, 0.5);
+	usleep((unsigned)5000);
 }
 void Manager::changeYawRobot(double dYaw) {
 	this->readOnRobot();

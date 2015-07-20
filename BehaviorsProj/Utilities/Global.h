@@ -12,13 +12,12 @@ using namespace std;
 
 #define PLAYER 0
 #define DEBUG 0
-#define REAL_ROBOT 0
 #define REAL_ROBOT_IP "10.10.245.64"
 
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-#define MAX_PARTICLE 50
+#define MAX_PARTICLE 25
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2
 #define MAX_YAW_FOR_PROB 0.1

@@ -16,6 +16,7 @@
 #include "Particle.h"
 #include <vector>
 #include <math.h>
+#include <unistd.h>
 
 class Manager {
 	Robot* _robot;
