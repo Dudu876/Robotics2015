@@ -48,8 +48,8 @@ float Particle::getBelief() {
 Position Particle::createPositionRandomly(Position currentPosition) {
 
 	// Calc range of delta particle
-	int rowRange = floor(_map->getHeight() / 2 * 0.015);
-	int colRange = floor(_map->getWidth() / 2 * 0.015);
+	int rowRange = floor(_map->getHeight() / 2 * PARTICLE_RADIUS);
+	int colRange = floor(_map->getWidth() / 2 * PARTICLE_RADIUS);
 	double YawRange = M_PI * 2 / 2 * 0.1;
 
 	int intYawRange = YawRange * 10000;

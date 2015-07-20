@@ -17,12 +17,12 @@ using namespace std;
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-#define MAX_PARTICLE 125
+#define MAX_PARTICLE 100
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2
 #define MAX_YAW_FOR_PROB 0.1
 #define BELIEF_TRASHHOLD 0.4
-
+#define PARTICLE_RADIUS 0.3
 //Laser
 
 #define LASER_MAX_DEGREE 240.0;
@@ -30,7 +30,7 @@ using namespace std;
 #define MAX_LEASER_DISTANCE  4.0
 #define PARTICLE_LASER_NOISE_IN_METER 0.25
 #define PARTICLE_LASER_NOISE_IN_CM 25
-#define CM_TO_CHECK_LASER 10
+#define CM_TO_CHECK_LASER 50
 
 /* LASER */
 const unsigned LASER_SLEASER_ARRAY_SIZE = 666;
