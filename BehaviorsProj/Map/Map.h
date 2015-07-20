@@ -23,6 +23,7 @@ private:
 	string _filename;
 	int _width;
 	int _height;
+	double _mapResolution;
 
 public:
 	Map();
@@ -34,6 +35,7 @@ public:
 
 	int getWidth();
 	int getHeight();
+	double getMapResolution();
 
 };
 

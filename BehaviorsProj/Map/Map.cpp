@@ -51,7 +51,7 @@ Map::Map() {
 	}
 
 	// Getting the map resolution
-	double mapResolution = ConfigurationManager::getMapResolution();
+	_mapResolution = ConfigurationManager::getMapResolution();
 	// Getting the grid resolution
 	int gridResolution = ConfigurationManager::getGridResolution();
 
@@ -60,7 +60,7 @@ Map::Map() {
 	ConfigurationManager::getRobotSize(robot_size_x, robot_size_y);
 
 	// creating the the puff size
-	int puffSize = ceil(max(robot_size_x, robot_size_y) / mapResolution / 2);
+	int puffSize = ceil(max(robot_size_x, robot_size_y) / _mapResolution/ 2);
 			//+ 2;
 
 	// Creating large map for puff the original map
@@ -116,8 +116,8 @@ Map::Map() {
 	}
 	fclose(f);
 
-	int grid_height = (height * mapResolution) / gridResolution;
-	int grid_width = (width * mapResolution) / gridResolution;
+	int grid_height = (height * _mapResolution) / gridResolution;
+	int grid_width = (width * _mapResolution) / gridResolution;
 
 	int** grid = new int*[grid_height];
 
@@ -128,7 +128,7 @@ Map::Map() {
 
 	//int grid[grid_height][grid_width];
 
-	int scaleLargeToGrid = gridResolution / mapResolution;
+	int scaleLargeToGrid = gridResolution / _mapResolution;
 
 	// Running over the puff map and transform it to grid
 	for (int y = 0; y < grid_height; y++) {
@@ -166,13 +166,13 @@ Map::Map() {
 	int colStart, rowStart;
 	double yawStart;
 	ConfigurationManager::getStartLocation(colStart, rowStart, yawStart);
-	rowStart = (rowStart * mapResolution) / gridResolution;
-	colStart = (colStart * mapResolution) / gridResolution;
+	rowStart = (rowStart * _mapResolution) / gridResolution;
+	colStart = (colStart * _mapResolution) / gridResolution;
 
 	int colGoal, rowGoal;
 	ConfigurationManager::getGoal(colGoal, rowGoal);
-	rowGoal = (rowGoal * mapResolution) / gridResolution;
-	colGoal = (colGoal * mapResolution) / gridResolution;
+	rowGoal = (rowGoal * _mapResolution) / gridResolution;
+	colGoal = (colGoal * _mapResolution) / gridResolution;
 
 	Position startPosition = Position(rowStart, colStart, yawStart);
 	Point goalPoint = Point(rowGoal, colGoal);
@@ -201,7 +201,9 @@ int Map::getHeight() {
 void Map::loadMap() {
 
 }
-
+double Map::getMapResolution() {
+	return _mapResolution;
+}
 Map::~Map() {
 	// TODO Auto-generated destructor stub
 }

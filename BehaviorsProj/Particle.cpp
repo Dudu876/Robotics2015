@@ -172,8 +172,8 @@ int Particle::checkIfLaserDetectRight(float laserScanValue, int laserRead) {
 		float deltaRow = sinofSpottedPoint * distanceFromSpottedPointInCM;
 
 		// transform delta from cm to pixels
-		deltaCol = deltaCol * ConfigurationManager::getMapResolution();
-		deltaRow = deltaRow * ConfigurationManager::getMapResolution();
+		deltaCol = deltaCol * _map->getMapResolution();
+		deltaRow = deltaRow * _map->getMapResolution();
 
 		// create the spotted point from particle current position + delta
 		Point spottedPoint(round(_position.getCol() + deltaCol),

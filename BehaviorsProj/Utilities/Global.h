@@ -12,12 +12,12 @@ using namespace std;
 
 #define PLAYER 0
 #define DEBUG 0
-#define ROBOT_IP "localhost" //"10.10.245.63"
-
+#define ROBOT_IP "localhost"
+//#define ROBOT_IP "10.10.245.65"
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-#define MAX_PARTICLE 100
+#define MAX_PARTICLE 200
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2
 #define MAX_YAW_FOR_PROB 0.1
@@ -30,7 +30,7 @@ using namespace std;
 #define MAX_LEASER_DISTANCE  4.0
 #define PARTICLE_LASER_NOISE_IN_METER 0.25
 #define PARTICLE_LASER_NOISE_IN_CM 25
-#define CM_TO_CHECK_LASER 50
+#define CM_TO_CHECK_LASER 15
 
 /* LASER */
 const unsigned LASER_SLEASER_ARRAY_SIZE = 666;
@@ -44,12 +44,12 @@ const double END_LEFT_RAYS_RANGE_ANGLE = 120;
 
 
 // movement
-#define ROTATION_SPEED 0.2
+#define ROTATION_SPEED 0.12
 #define FORWARD_SPEED_SLOW 0.2
 #define FORWARD_SPEED 0.2
 #define ROTATION_FORWARD_SPEED 0.06
 //#define MINIMUM_DISTANCE 1.7
-#define MINIMUM_DISTANCE 12
+#define MINIMUM_DISTANCE 20
 
 // Smooth
 #define MINIMUM_ANGLE 1
