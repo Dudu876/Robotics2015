@@ -4,6 +4,7 @@
 
 #include "../Robot.h"
 #include <vector>
+#include "../Utilities/Global.h"
 
 using namespace std;
 

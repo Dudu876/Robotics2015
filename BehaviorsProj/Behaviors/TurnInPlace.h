@@ -14,6 +14,9 @@ class TurnInPlace: public Behavior {
 public:
 	TurnInPlace(Robot* robot);
 	virtual ~TurnInPlace();
+	bool startCond();
+	bool stopCond();
+
 };
 
 #endif /* TURNINPLACE_H_ */

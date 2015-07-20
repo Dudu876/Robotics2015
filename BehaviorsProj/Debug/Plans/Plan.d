@@ -14,7 +14,8 @@ Plans/Plan.d: ../Plans/Plan.cpp ../Plans/Plan.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
  ../Plans/../Behaviors/../Utilities/Global.h \
- ../Plans/../Behaviors/../Utilities/Position.h ../Plans/../Robot.h
+ ../Plans/../Behaviors/../Utilities/Position.h \
+ ../Plans/../Behaviors/../Utilities/Global.h ../Plans/../Robot.h
 
 ../Plans/Plan.h:
 
@@ -51,5 +52,7 @@ Plans/Plan.d: ../Plans/Plan.cpp ../Plans/Plan.h \
 ../Plans/../Behaviors/../Utilities/Global.h:
 
 ../Plans/../Behaviors/../Utilities/Position.h:
+
+../Plans/../Behaviors/../Utilities/Global.h:
 
 ../Plans/../Robot.h:
