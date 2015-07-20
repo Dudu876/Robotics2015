@@ -12,8 +12,8 @@ using namespace std;
 
 #define PLAYER 0
 #define DEBUG 0
-#define ROBOT_IP "localhost"
-//#define ROBOT_IP "10.10.245.65"
+//#define ROBOT_IP "localhost"
+#define ROBOT_IP "10.10.245.65"
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
@@ -52,8 +52,8 @@ const double END_LEFT_RAYS_RANGE_ANGLE = 120;
 #define MINIMUM_DISTANCE 20
 
 // Smooth
-#define MINIMUM_ANGLE 1
-#define ANGLE_RANGE 0.075
+#define MINIMUM_ANGLE 0.5
+#define ANGLE_RANGE 0.1
 
 // robot movement directions
 #define MOVE_FORWARD 0

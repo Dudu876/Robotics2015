@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../Behaviors/Behavior.cpp \
 ../Behaviors/MoveForward.cpp \
+../Behaviors/TurnInPlace.cpp \
 ../Behaviors/TurnRight.cpp 
 
 OBJS += \
 ./Behaviors/Behavior.o \
 ./Behaviors/MoveForward.o \
+./Behaviors/TurnInPlace.o \
 ./Behaviors/TurnRight.o 
 
 CPP_DEPS += \
 ./Behaviors/Behavior.d \
 ./Behaviors/MoveForward.d \
+./Behaviors/TurnInPlace.d \
 ./Behaviors/TurnRight.d 
 
 
