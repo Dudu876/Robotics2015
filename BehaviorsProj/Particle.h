@@ -36,7 +36,7 @@ public:
 
 	float getBelief();
 	Position createPositionRandomly(Position currentPosition);
-	vector<Particle> createParticles(int amount);
+	Particle createParticle();
 	float UpdateParticle(double dRow,double dCol,double dYaw, float laserArray[]);
 
 	float ProbByMove(double dRow,double dCol,double dYaw);

@@ -30,20 +30,10 @@ void LocalizationManager::createParticlesFromParticle(Particle fromParticle,
 		this->_particles.push_back(fromParticle);
 	}
 
+	int particalesToCreate = MAX_PARTICLE - this->_particles.size();
 	// create particles from best particle, the amount will be (MAX_PARTICLE - amount we have)
-	vector<Particle> childParticles =
-			getHighestBeliefParticle().createParticles(
-			MAX_PARTICLE - this->_particles.size());
-
-	// Add childParticles to _particles
-	addParticleFromVector(childParticles);
-}
-
-void LocalizationManager::addParticleFromVector(
-		const vector<Particle>& childParticles) {
-	// Add child particles to _particles
-	for (int index = 0; index < childParticles.size(); index++) {
-		this->_particles.push_back(childParticles[index]);
+	for (int index = 0; index < particalesToCreate; index++) {
+		_particles.push_back(fromParticle.createParticle());
 	}
 }
 
@@ -81,9 +71,10 @@ void LocalizationManager::updateParticles(Position * deltaPosition,
 		}
 	}
 
-//	if (DEBUG) {
-//		cout << "Number of particals after delete: " << _particles.size() << endl;
-//	}
+	if (DEBUG) {
+		cout << "Number of particals after delete: " << _particles.size()
+				<< endl;
+	}
 
 	// all particle died, so we need to create new particle from storePosition
 	if (_particles.size() == 0) {
@@ -93,13 +84,13 @@ void LocalizationManager::updateParticles(Position * deltaPosition,
 				(float) (1), this->_map);
 		this->createParticlesFromParticle(startParticle, true);
 	} else {
+		Particle bestPractical = getHighestBeliefParticle();
 		if (DEBUG) {
-			Particle best = getHighestBeliefParticle();
-			cout << "Best partical's values: " << best.getCol() << best.getRow()
-					<< best.getBelief();
+			cout << "Best partical's values: " << bestPractical.getCol() << bestPractical.getRow()
+					<< bestPractical.getBelief();
 		}
 
-		this->createParticlesFromParticle(getHighestBeliefParticle(), false);
+		this->createParticlesFromParticle(bestPractical, false);
 	}
 }
 

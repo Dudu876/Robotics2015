@@ -12,12 +12,12 @@ using namespace std;
 
 #define PLAYER 0
 #define DEBUG 0
-#define REAL_ROBOT_IP "10.10.245.64"
+#define ROBOT_IP "localhost" //"10.10.245.63"
 
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-#define MAX_PARTICLE 25
+#define MAX_PARTICLE 125
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2
 #define MAX_YAW_FOR_PROB 0.1
@@ -30,6 +30,7 @@ using namespace std;
 #define MAX_LEASER_DISTANCE  4.0
 #define PARTICLE_LASER_NOISE_IN_METER 0.25
 #define PARTICLE_LASER_NOISE_IN_CM 25
+#define CM_TO_CHECK_LASER 10
 
 /* LASER */
 const unsigned LASER_SLEASER_ARRAY_SIZE = 666;

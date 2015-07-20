@@ -67,15 +67,9 @@ Position Particle::createPositionRandomly(Position currentPosition) {
 	return randomLocation;
 }
 
-vector<Particle> Particle::createParticles(int amount) {
-	vector<Particle> vecPar;
-
-	// Generate particles (the constructor of particle(position) creates random particle
-	for (int index = 0; index < amount; index++) {
-		vecPar.push_back(Particle(_position, _belief * 0.9, _map));
-	}
-
-	return vecPar;
+Particle Particle::createParticle() {
+	// Generate particle (the constructor of particle(position) creates random particle
+	return Particle(_position, _belief * 0.9, _map);
 }
 
 float Particle::UpdateParticle(double dRow, double dCol, double dYaw,
@@ -170,7 +164,7 @@ int Particle::checkIfLaserDetectRight(float laserScanValue, int laserRead) {
 	// run from robot position until laserScanValue Distance
 	for (int distanceFromSpottedPointInCM = 1;
 			distanceFromSpottedPointInCM < floor(laserScanValueInCM);
-			distanceFromSpottedPointInCM += 10) {
+			distanceFromSpottedPointInCM += CM_TO_CHECK_LASER) {
 
 		// Calculating the spotted point delta position
 		// I think it works only for angle of top right

@@ -53,8 +53,7 @@ int main() {
 	Map map = Map();
 	Grid grid = map.getGrid();
 
-	//Robot robot(REAL_ROBOT_IP, 6665);
-	Robot robot("localhost", 6665);
+	Robot robot(ROBOT_IP, 6665);
 
 	robot.Read();
 
