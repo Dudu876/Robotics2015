@@ -10,12 +10,12 @@
 
 using namespace std;
 
-#define PLAYER 0
+#define PLAYER 1
 
 
 // Particle
 #define DEGREE_TO_RADIAN(degree)		((degree * M_PI) / 180)
-#define MAX_PARTICLE 100
+#define MAX_PARTICLE 2
 #define MIU_FOR_BELIEF 1.1
 #define MAX_DISTANCE_FOR_PROB 0.2
 #define MAX_YAW_FOR_PROB 0.1
@@ -41,10 +41,10 @@ const double END_LEFT_RAYS_RANGE_ANGLE = 120;
 
 
 // movement
-#define ROTATION_SPEED 0.35
+#define ROTATION_SPEED 0.2
 #define FORWARD_SPEED_SLOW 0.2
-#define FORWARD_SPEED 0.3
-#define ROTATION_FORWARD_SPEED 0.12
+#define FORWARD_SPEED 0.2
+#define ROTATION_FORWARD_SPEED 0.09
 //#define MINIMUM_DISTANCE 1.7
 #define MINIMUM_DISTANCE 12
 

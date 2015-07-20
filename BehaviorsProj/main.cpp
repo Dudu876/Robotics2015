@@ -48,12 +48,13 @@ int main() {
 	ConfigurationManager::getStartLocation(colStart, rowStart, yawStart);
 	yawStart = DEGREE_TO_RADIAN(yawStart);
 
-	Position *  startPosition = new Position(rowStart, colStart, yawStart);
+	Position * startPosition = new Position(rowStart, colStart, yawStart);
 
 	Map map = Map();
 	Grid grid = map.getGrid();
 
 	Robot robot("localhost", 6665);
+	//Robot robot("10.10.245.65", 6665);
 	robot.Read();
 
 	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
@@ -62,8 +63,11 @@ int main() {
 	double initialRow = -2.875;
 	double initialCol = 2.175;
 	double initialYaw = 0.349;
-	robot.UpdatePosition(initialRow, initialCol, initialYaw);
-	robot.Read();
+
+	for (int i = 0; i < 20; i++) {
+		robot.UpdatePosition(initialRow, initialCol, initialYaw);
+		robot.Read();
+	}
 
 	cout << "Robot real read: (row, col, yaw) (" << robot.getRealY() << ", "
 			<< robot.getRealX() << ", " << robot.getRealYaw() << ")" << endl;

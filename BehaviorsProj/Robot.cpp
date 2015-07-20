@@ -27,7 +27,7 @@ Robot::Robot(string ip, int port) :
 
 	//Fix the player bug
 	for (int i = 0; i < 15; i++) {
-		this->Read();
+		this->_pc.Read();
 	}
 }
 
