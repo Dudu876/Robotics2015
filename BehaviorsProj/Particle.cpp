@@ -91,6 +91,10 @@ float Particle::UpdateParticle(double dRow, double dCol, double dYaw,
 		this->_belief = 1;
 	}
 
+//	if (DEBUG) {
+//		cout << "UpdateParticle belief: " << _belief << endl;
+//	}
+
 	return this->_belief;
 }
 

@@ -65,6 +65,7 @@ void Manager::runOnPlayer() {
 	}
 
 	cout << "Goal point reached successfully" << endl;
+	this->_robot->setSpeed(0, 3);
 }
 
 void Manager::runOnRobot() {
@@ -121,6 +122,7 @@ void Manager::runOnRobot() {
 	}
 
 	cout << "Goal point reached successfully" << endl;
+	this->_robot->setSpeed(0, 3);
 }
 void Manager::changeYawRobot(double dYaw) {
 	this->readOnRobot();

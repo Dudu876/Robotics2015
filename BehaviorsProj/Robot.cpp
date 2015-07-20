@@ -148,8 +148,11 @@ void Robot::ChangeYawRobotPlayer(double dYaw) {
 		if (currYaw < 0) {
 			currYaw = M_PI + (M_PI + currYaw);
 		}
-		cout << "Wanted angle: " << wantedYaw << " Robot Yaw: " << currYaw
-				<< "delta: " << abs(wantedYaw - currYaw) << endl;
+
+		if (DEBUG) {
+			cout << "Wanted angle: " << wantedYaw << " Robot Yaw: " << currYaw
+					<< "delta: " << abs(wantedYaw - currYaw) << endl;
+		}
 		//currYaw += M_PI;
 
 		//if (currYaw > dYaw - 0.06 && currYaw < dYaw + 0.06) {

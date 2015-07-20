@@ -70,34 +70,35 @@ void LocalizationManager::updateParticles(Position * deltaPosition,
 	_storePosition.setCol(_storePosition.getCol() + deltaPosition->getCol());
 	_storePosition.setYaw(_storePosition.getYaw() + deltaPosition->getYaw());
 
-	//vector<Particle> particlesForDelete;
-	vector<Particle> goodParticles;
-
-	for (int index = 0; index < this->_particles.size(); index++) {
-		float currentParticleBelief;
-
-		// update particle belief and get his new belief
-		currentParticleBelief = this->_particles[index].UpdateParticle(
-				deltaPosition->getRow(), deltaPosition->getCol(),
-				deltaPosition->getYaw(), laserScan);
-
-		// check if particle bellief is too low
-		if (currentParticleBelief < BELIEF_TRASHHOLD) {
-			//particlesForDelete.push_back(this->_particles[index]);
+	for (vector<Particle>::iterator partic = _particles.begin();
+			partic != _particles.end();) {
+		if (partic->UpdateParticle(deltaPosition->getRow(),
+				deltaPosition->getCol(), deltaPosition->getYaw(),
+				laserScan) < BELIEF_TRASHHOLD) {
+			_particles.erase(partic);
 		} else {
-			goodParticles.push_back(this->_particles[index]);
+			partic++;
 		}
 	}
 
+//	if (DEBUG) {
+//		cout << "Number of particals after delete: " << _particles.size() << endl;
+//	}
+
 	// all particle died, so we need to create new particle from storePosition
-	if (goodParticles.size() == 0) {
+	if (_particles.size() == 0) {
 		// create particles from start position
 		Particle startParticle = Particle(this->_storePosition.getRow(),
-				this->_storePosition.getCol(), this->_storePosition.getYaw(), (float) (1),
-				this->_map);
+				this->_storePosition.getCol(), this->_storePosition.getYaw(),
+				(float) (1), this->_map);
 		this->createParticlesFromParticle(startParticle, true);
 	} else {
-		this->_particles = goodParticles;
+		if (DEBUG) {
+			Particle best = getHighestBeliefParticle();
+			cout << "Best partical's values: " << best.getCol() << best.getRow()
+					<< best.getBelief();
+		}
+
 		this->createParticlesFromParticle(getHighestBeliefParticle(), false);
 	}
 }
